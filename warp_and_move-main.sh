@@ -20,28 +20,76 @@ kill_previous_instances
 # Trap SIGINT (Ctrl+C) and exit gracefully
 trap "echo 'Exiting...'; exit 0" INT
 
-FEED_TIMESTAMP_FILE="/tmp/.feed_timestamp"
-FEED_DALAY=600
+source /home/tori/Games/main.vars
+last_move_time=0
 
-SLEEP_DALAY=3
-SLEEP_RND_DELAY=2
+#FEED_TIMESTAMP_FILE="/tmp/.feed_timestamp"
+#FEED_DALAY=600
+#
+#SLEEP_DALAY=3
+#SLEEP_RND_DELAY=2
 
 action_select_one() {
   echo "Select 1st char: $(date)"
-  ydotool mousemove --absolute -x 230 -y 180
+  # self
+  ydotool mousemove --absolute -x 275 -y 170
   sleep 0.1
   ydotool click 0xC0
   sleep 1
 }
 
-action_move() {
+action_do_move() {
   echo "Move char: $(date)"
 
-  # ydotool mousemove --absolute -x 120 -y 190
-  ydotool mousemove --absolute -x 200 -y 170
+  MOVE_TO_X=230
+  MOVE_TO_Y=170
+
+  # X>270 && X<282
+  # Y>168 && Y<179
+
+  if [[ "$MOVE_RND_DISTANCE" == "true" ]]; then
+
+    if [[ "$MOVE_RND_FAR" == "true" ]]; then 
+      move_dist_x=$(( ( RANDOM % (MOVE_FAR_DISTANCE_X + 1)) ))
+      move_dist_Y=$(( ( RANDOM % (MOVE_FAR_DISTANCE_Y + 1)) ))
+
+      MOVE_TO_X=$(( MOVE_TO_X + move_dist_x ))
+      MOVE_TO_Y=$(( MOVE_TO_Y + move_dist_y ))
+    else
+      move_dist_x=$(( ( RANDOM % (MOVE_NEAR_DISTANCE_X + 1)) ))
+      move_dist_Y=$(( ( RANDOM % (MOVE_NEAR_DISTANCE_Y + 1)) ))
+
+      MOVE_TO_X=$(( MOVE_TO_X + move_dist_x ))
+      MOVE_TO_Y=$(( MOVE_TO_Y + move_dist_y ))      
+    fi    
+
+  fi
+
+  if (( MOVE_TO_X>270 && MOVE_TO_X<282 && MOVE_TO_Y>168 && MOVE_TO_Y<179 )); then
+    echo "Chose self spot. fixig..."
+    MOVE_TO_X=290
+    MOVE_TO_Y=185
+  fi
+
+  ydotool mousemove --absolute -x $MOVE_TO_X -y $MOVE_TO_Y
   sleep 0.5
   ydotool click 0xC0;
-  sleep 1; 
+  sleep 0.3; 
+}
+
+action_move() {
+  if [[ "$SMART_MOVE_DELAY" == "true" ]]; then
+    current_time=$(date +%s)
+    time_diff_move=$((current_time - last_move_time))
+
+    # Check if 1st timeout reached target
+    if (( time_diff_move + SLEEP_RND_DELAY + SLEEP_DALAY > MOVE_MAX_DELAY )); then 
+      action_do_move
+      last_move_time=$(date +%s)
+    fi
+  else
+    action_do_move
+  fi
 }
 
 action_warp() {
@@ -65,9 +113,10 @@ action_feed() {
   #echo type =| dotool
   ydotool key 13:1 13:0
   sleep 1
-  # move to feed btn
+  # move to feed btn at default win location
   ydotool mousemove --absolute -x 230 -y 155
 #  ydotool mousemove --absolute -x 280 -y 215
+# center win location
   #ydotool mousemove --absolute -x 320 -y 200
   sleep 0.8
   ydotool click 0xC0
@@ -102,11 +151,29 @@ while true; do
     date +%s > "$FEED_TIMESTAMP_FILE"
   fi
 
-  action_move
-  #action_select_one
-  action_warp
-  #action_wing
-  #action_move
+  # action_move
+  # #action_select_one
+  # action_warp
+  # #action_wing
+  # #action_move
+
+  if [[ "$SET_FOCUS_FIRST" == "true" ]]; then 
+    action_select_one
+  fi 
+
+  if [[ "$MOVE_BEFORE_WARP" == "true" ]]; then 
+    action_move
+  fi
+
+  if [[ "$USE_WARP" == "true" ]]; then 
+    action_warp
+  elif [[ "$USE_WING" == "true" ]]; then 
+    action_wing
+  fi
+
+  if [[ "$MOVE_AFTER_WARP" == "true" ]]; then 
+    action_move
+  fi    
 
   # Generate a random number 
   random_sleep=$(( ( RANDOM % (SLEEP_RND_DELAY + 1)) + (SLEEP_DALAY) )) 
