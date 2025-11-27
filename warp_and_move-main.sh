@@ -20,7 +20,7 @@ kill_previous_instances
 # Trap SIGINT (Ctrl+C) and exit gracefully
 trap "echo 'Exiting...'; exit 0" INT
 
-source /home/tori/Games/main.vars
+source ~/Games/main.vars
 last_move_time=0
 
 #FEED_TIMESTAMP_FILE="/tmp/.feed_timestamp"
@@ -38,6 +38,8 @@ action_select_one() {
   sleep 1
 }
 
+## TODO:
+# Set self location of char and calc offset from that position. Or try to make windows on same position
 action_do_move() {
   echo "Move char: $(date)"
 
@@ -65,7 +67,7 @@ action_do_move() {
 
   fi
 
-  if (( MOVE_TO_X>270 && MOVE_TO_X<282 && MOVE_TO_Y>168 && MOVE_TO_Y<179 )); then
+  if (( MOVE_TO_X>265 && MOVE_TO_X<287 && MOVE_TO_Y>163 && MOVE_TO_Y<184 )); then
     echo "Chose self spot. fixig..."
     MOVE_TO_X=290
     MOVE_TO_Y=185
@@ -79,8 +81,8 @@ action_do_move() {
 
 action_move() {
   if [[ "$SMART_MOVE_DELAY" == "true" ]]; then
-    current_time=$(date +%s)
-    time_diff_move=$((current_time - last_move_time))
+    cur_time=$(date +%s)
+    time_diff_move=$((cur_time - last_move_time))
 
     # Check if 1st timeout reached target
     if (( time_diff_move + SLEEP_RND_DELAY + SLEEP_DALAY > MOVE_MAX_DELAY )); then 
@@ -113,18 +115,27 @@ action_feed() {
   #echo type =| dotool
   ydotool key 13:1 13:0
   sleep 1
-  # move to feed btn at default win location
-  ydotool mousemove --absolute -x 230 -y 155
-#  ydotool mousemove --absolute -x 280 -y 215
-# center win location
-  #ydotool mousemove --absolute -x 320 -y 200
-  sleep 0.8
-  ydotool click 0xC0
-  sleep 0.8
-  ydotool mousemove --absolute -x 320 -y 200
-  sleep 0.8
-  ydotool click 0xC0
-  sleep 1
+
+  if [[ "$FEED_ON_CENTER" == "true" ]]; then
+    # move to feed btn at default win location at tiny-arch
+    ydotool mousemove --absolute -x 270 -y 185
+    sleep 0.8
+    ydotool click 0xC0
+    sleep 0.3
+    ydotool click 0xC0
+    sleep 0.3
+  else
+    # default setup with win on center
+    ydotool mousemove --absolute -x 230 -y 155
+    sleep 0.8
+    ydotool click 0xC0
+    sleep 0.8
+    ydotool mousemove --absolute -x 320 -y 200
+    sleep 0.8
+    ydotool click 0xC0
+    sleep 1    
+  fi
+
   ydotool key 13:1 13:0
   #echo type =| dotool
   sleep 1
