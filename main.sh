@@ -2,10 +2,12 @@
 
 # Path to the timestamp file
 TIMESTAMP_FILE="/tmp/.last_link_timestamp"
+TIMESTAMP_A_FILE="/tmp/.last_bers_timestamp"
 ALTTAB_DELAY=0.5
 SKILL_DELAY=0.3
 
-RERUN=false
+#RERUN=false
+RERUN=true
 
 WINDOW=4
 
@@ -43,12 +45,13 @@ action_bs_buff() {
 
   #echo type z| dotool
   ydotool key 44:1 44:0
-  sleep 0.6
+  sleep 0.5
   # echo type x| dotool
   # sleep 0.3
+  # W Perfection
   #echo type c| dotool
-  ydotool key 46:1 46:0
-  sleep 0.6
+  #ydotool key 46:1 46:0
+  sleep 0.5
 
   # # Press Z
   # ydotool key 44:1 key 44:0;
@@ -68,22 +71,25 @@ action_link_bs() {
     echo "alt + tab to linker: $(date)"
     #echo key Super+2 | dotool
     ydotool key 125:1 3:1 125:0 3:0
-    sleep 1
+    sleep 0.5
     WINDOW=2
   fi
 
   # press Q for BS link
   #echo type q| dotool
   ydotool key 16:1 16:0
-  sleep 0.5
+  sleep 0.3
 
   # move to 2nd slot
-  ydotool mousemove --absolute -x 190 -y 140
-  sleep 0.5
+  # win at right bottom
+  ydotool mousemove --absolute -x 423 -y 248 
+  # win at mid left top
+  #ydotool mousemove --absolute -x 190 -y 140
+  sleep 0.3
 
   # click on BS
   ydotool click 0xC0;
-  sleep 1.5
+  sleep 0.3
 }
 
 action_link_rogue() {
@@ -93,7 +99,7 @@ action_link_rogue() {
     echo "alt + tab to linker: $(date)"
     #echo key Super+2 | dotool
     ydotool key 125:1 3:1 125:0 3:0
-    sleep 1
+    sleep 0.3
     WINDOW=2
   fi
 
@@ -106,59 +112,171 @@ action_link_rogue() {
   ydotool mousemove --absolute -x 190 -y 130
   # move to 5th slot
   # ydotool mousemove --absolute -x 190 -y 180
-  sleep 0.7
+  sleep 0.3
 
   # click on Rogue
   ydotool click 0xC0;
-  sleep 0.7
+  sleep 0.3
 
   echo "alt tab back to BS: $(date)"
   #echo key Super+3 | dotool
   ydotool key 125:1 4:1 125:0 4:0
-  sleep 1
+  sleep 0.3
   WINDOW=3  
 }
 
+action_link_sage() {
+  echo "Link SAGE: $(date)"
+
+  if [[ (( "$WINDOW" -ne 2 )) ]]; then
+    echo "alt + tab to linker: $(date)"
+    #echo key Super+2 | dotool
+    ydotool key 125:1 3:1 125:0 3:0
+    sleep 0.3
+    WINDOW=2
+  fi
+
+  # press w for Rogue link
+  #echo type w| dotool
+  ydotool key 19:1 19:0
+  sleep 0.5
+
+  # move to 4th slot on right bottom
+  ydotool mousemove --absolute -x 423 -y 270
+  # move to 5th slot
+  # ydotool mousemove --absolute -x 190 -y 180
+  sleep 0.5
+
+  # click on sage
+  ydotool click 0xC0;
+  sleep 0.5
+
+  echo "alt tab back to BS: $(date)"
+  #echo key Super+3 | dotool
+  ydotool key 125:1 4:1 125:0 4:0
+  sleep 0.3
+  WINDOW=3  
+}
+
+action_link_alch() {
+  echo "Link ALCH: $(date)"
+
+  if [[ (( "$WINDOW" -ne 2 )) ]]; then
+    echo "alt + tab to linker: $(date)"
+    #echo key Super+2 | dotool
+    ydotool key 125:1 3:1 125:0 3:0
+    sleep 0.3
+    WINDOW=2
+  fi
+
+  # press a for Alchemist link
+  #echo type a| dotool
+  ydotool key 30:1 30:0
+  sleep 0.5
+
+  # move to 5th slot on right bottom
+  ydotool mousemove --absolute -x 423 -y 282
+  sleep 0.5
+
+  # click on char
+  ydotool click 0xC0;
+  sleep 0.5
+}
+
+action_throw_bers() {
+  echo "Throw bers from Alch: $(date)"
+
+  if [[ (( "$WINDOW" -ne 4 )) ]]; then
+    echo "alt + tab to Alch: $(date)"
+    #echo key Super+4 | dotool
+    ydotool key 125:1 5:1 125:0 5:0
+    sleep 0.3
+    WINDOW=4
+  fi
+
+  # press x for Bererk Pot Pitcher
+  ydotool key 45:1 45:0
+  sleep 0.5
+
+  # move to 4th slot on right bottom
+  ydotool mousemove --absolute -x 423 -y 270
+  sleep 0.5
+
+  # click on sage
+  ydotool click 0xC0;
+  sleep 0.5
+}
 
 
-# Get the last run timestamp. If it doesn't exist, create it and set it to the current time.
+# SECTION FOR BS LINK ONCE IN 5 MIN
 if [ ! -f "$TIMESTAMP_FILE" ]; then
   touch "$TIMESTAMP_FILE"
   date +%s > "$TIMESTAMP_FILE"  # Store the current epoch time
-  # action_link_bs
+#  action_link_bs
 fi
 
 last_run=$(cat "$TIMESTAMP_FILE")
 current_time=$(date +%s)
 time_diff=$((current_time - last_run))
 
-# Check if 5 minutes have passed since the last run
-
 if (( time_diff > 300 )); then  # 300 seconds = 5 minutes
-  action_link_bs
+#  action_link_bs
   # Update the timestamp after Action 2 is executed
   date +%s > "$TIMESTAMP_FILE"
 else
-  echo "Skipping Action 2. Only $(($time_diff / 60)) minutes and $((time_diff % 60)) seconds have passed."
+  echo "Skipping Action BS LINK. Only $(($time_diff / 60)) minutes and $((time_diff % 60)) seconds have passed."
+fi
+############ END ##################
+
+# SECTION FOR ALCH LINK + BERS ONCE IN 12 MIN
+if [ ! -f "$TIMESTAMP_A_FILE" ]; then
+  touch "$TIMESTAMP_A_FILE"
+  date +%s > "$TIMESTAMP_A_FILE"  # Store the current epoch time
+  sleep 2
+#  action_link_alch
+#  action_throw_bers
 fi
 
-# Execute Action 1 always
-action_link_rogue
-action_bs_buff
+last_run_a=$(cat "$TIMESTAMP_A_FILE")
+current_time_a=$(date +%s)
+time_diff_a=$((current_time_a - last_run_a))
+
+
+if (( time_diff_a > 750 )); then  # 750 seconds = 12.5 minutes
+#  action_link_alch
+#  action_throw_bers
+  # Update the timestamp after Action 2 is executed
+  date +%s > "$TIMESTAMP_A_FILE"
+else
+  echo "Skipping Action Alch LINK + BERS. Only $(($time_diff_a / 60)) minutes and $((time_diff_a % 60)) seconds have passed."
+fi
+
+############ END ##################
+
+# cast every time
+action_link_bs
+
+#action_link_rogue
+#action_link_sage
+#action_bs_buff
+
 
 if [[ "$RERUN" == "false" ]]; then
   #echo key Super+4 | dotool
   ydotool key 125:1 5:1 125:0 5:0
+  WINDOW=4
+  sleep 0.5
 fi
 
 if [[ "$RERUN" == "true" ]]; then 
   #echo key Super+4 | dotool
   ydotool key 125:1 5:1 125:0 5:0
-  WINDOW=3
+  WINDOW=4
   sleep 0.5
-  ydotool mousemove --absolute -x 120 -y 180
-  sleep 0.3
-  ydotool click 0xC0;
-  sleep 0.3
-  bash -c /home/tori/Games/warp_and_move.sh &
+  #ydotool mousemove --absolute -x 120 -y 180
+  #sleep 0.3
+  #ydotool click 0xC0;
+  #sleep 0.3
+  #bash -c /home/tori/Games/warp_and_move.sh &
+  bash -c /home/tori/Games/warp_and_move_on_spot.sh &
 fi
