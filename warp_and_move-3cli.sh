@@ -268,11 +268,11 @@ if [ ! -f "$FEED_TIMESTAMP_FILE" ]; then
   action_feed
 fi
 
-if [ ! -f "$MOVE_TIMESTAMP_FILE" ]; then
-  touch "$MOVE_TIMESTAMP_FILE"
-  date +%s > "$MOVE_TIMESTAMP_FILE"  # Store the current epoch time
-  action_keep_leech_alive
-fi
+# if [ ! -f "$MOVE_TIMESTAMP_FILE" ]; then
+#   touch "$MOVE_TIMESTAMP_FILE"
+#   date +%s > "$MOVE_TIMESTAMP_FILE"  # Store the current epoch time
+#   action_keep_leech_alive
+# fi
 
 while true; do
 
@@ -290,15 +290,15 @@ while true; do
     fi     
   fi
 
-  last_run_move_leech=$(cat "$MOVE_TIMESTAMP_FILE")
-  time_diff_move_leech=$((current_time - last_run_move_leech))
+  # last_run_move_leech=$(cat "$MOVE_TIMESTAMP_FILE")
+  # time_diff_move_leech=$((current_time - last_run_move_leech))
 
-  # Check if 1st timeout reached target
-  if (( time_diff_move_leech + SLEEP_RND_DELAY + SLEEP_DALAY > MOVE_ON_SPOT_DALAY )); then 
-    touch "$MOVE_TIMESTAMP_FILE"
-    date +%s > "$MOVE_TIMESTAMP_FILE"  # Store the current epoch time
-    action_keep_leech_alive 
-  fi
+  # # Check if 1st timeout reached target
+  # if (( time_diff_move_leech + SLEEP_RND_DELAY + SLEEP_DALAY > MOVE_ON_SPOT_DALAY )); then 
+  #   touch "$MOVE_TIMESTAMP_FILE"
+  #   date +%s > "$MOVE_TIMESTAMP_FILE"  # Store the current epoch time
+  #   action_keep_leech_alive 
+  # fi
 
   # action_move
   # #action_select_one
