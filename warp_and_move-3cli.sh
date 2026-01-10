@@ -162,6 +162,51 @@ action_do_heal() {
   fi
 }
 
+action_move_on_spot(){
+  #ydotool mousemove --absolute -x 220 -y 190
+  if (( LEFT == 1 )); then
+    ydotool mousemove --absolute -x 260 -y 170
+    LEFT=0
+  else
+    ydotool mousemove --absolute -x 290 -y 170
+    LEFT=1
+  fi
+  
+  sleep 0.3
+  ydotool click 0xC0
+  sleep 1
+}
+
+action_switch_to_guard(){
+    if [[ (( "$WINDOW" -ne 2 )) ]]; then
+    echo "alt + tab to guard: $(date)"
+    #echo key Super+2 | dotool
+    ydotool key 125:1 3:1 125:0 3:0
+    sleep 0.3
+    WINDOW=2
+  fi
+}
+
+action_switch_to_leech(){
+    if [[ (( "$WINDOW" -ne 3 )) ]]; then
+    echo "alt + tab to leech: $(date)"
+    #echo key Super+3 | dotool
+    ydotool key 125:1 4:1 125:0 4:0
+    sleep 0.3
+    WINDOW=3
+  fi
+}
+
+action_switch_to_main(){
+    if [[ (( "$WINDOW" -ne 4 )) ]]; then
+    echo "alt + tab to main: $(date)"
+    #echo key Super+4 | dotool
+    ydotool key 125:1 5:1 125:0 5:0
+    sleep 0.3
+    WINDOW=4
+  fi
+}
+
 action_wait_and_watch_for_hp() {
   local TARGET=$1
   TARGET=$((TARGET*10))
@@ -203,6 +248,17 @@ action_wait_and_watch_for_hp() {
   done
 }
 
+action_feed_guard(){
+  action_switch_to_guard
+  action_feed
+  action_switch_to_main
+}
+
+action_keep_leech_alive(){
+  action_switch_to_leech
+  action_move_on_spot
+  action_switch_to_main
+}
 
 sleep 1
 
@@ -210,6 +266,12 @@ if [ ! -f "$FEED_TIMESTAMP_FILE" ]; then
   touch "$FEED_TIMESTAMP_FILE"
   date +%s > "$FEED_TIMESTAMP_FILE"  # Store the current epoch time
   action_feed
+fi
+
+if [ ! -f "$MOVE_TIMESTAMP_FILE" ]; then
+  touch "$MOVE_TIMESTAMP_FILE"
+  date +%s > "$MOVE_TIMESTAMP_FILE"  # Store the current epoch time
+  action_keep_leech_alive
 fi
 
 while true; do
@@ -221,8 +283,22 @@ while true; do
   # Check if 1st timeout reached target
   if (( time_diff_feed > FEED_DALAY )); then 
     echo "Time to feed..."
-    action_feed
     date +%s > "$FEED_TIMESTAMP_FILE"
+    action_feed
+    if [[ "$DUAL_FEED" == "true" ]]; then 
+      action_feed_guard
+    fi     
+  fi
+
+  last_run_move_leech=$(cat "$MOVE_TIMESTAMP_FILE")
+  current_time_leech=$(date +%s)
+  time_diff_move_leech=$((current_time - last_run_feed))
+
+  # Check if 1st timeout reached target
+  if (( time_diff_move_leech + SLEEP_RND_DELAY + SLEEP_DALAY > MOVE_ON_SPOT_DALAY )); then 
+    touch "$MOVE_TIMESTAMP_FILE"
+    date +%s > "$MOVE_TIMESTAMP_FILE"  # Store the current epoch time
+    action_keep_leech_alive 
   fi
 
   # action_move
