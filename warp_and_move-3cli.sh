@@ -291,8 +291,7 @@ while true; do
   fi
 
   last_run_move_leech=$(cat "$MOVE_TIMESTAMP_FILE")
-  current_time_leech=$(date +%s)
-  time_diff_move_leech=$((current_time - last_run_feed))
+  time_diff_move_leech=$((current_time - last_run_move_leech))
 
   # Check if 1st timeout reached target
   if (( time_diff_move_leech + SLEEP_RND_DELAY + SLEEP_DALAY > MOVE_ON_SPOT_DALAY )); then 
