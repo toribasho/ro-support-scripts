@@ -1,11 +1,12 @@
 #!/bin/bash
 
 action_brew() {
-  echo type f| dotool
-  sleep 0.01
-  echo key enter enter| dotool
-  #sleep 0.01
-  # echo key enter| dotool
+  ydotool key 33:1 33:0
+  sleep 0.3
+  ydotool key 28:1 28:0
+  sleep 0.2
+  ydotool key 28:1 28:0
+  sleep 0.2
 }
 
 BREW_COUNT=$1
@@ -19,7 +20,7 @@ while true; do
   fi
 
   action_brew
-  #sleep 0.1
+  sleep 0.1
 
   COUNTER=$(( COUNTER +1 ))
 done
