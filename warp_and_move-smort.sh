@@ -118,6 +118,15 @@ action_feed() {
     sleep 0.3
     ydotool click 0xC0
     sleep 0.3
+  elif [[ "$FEED_ON_CENTER" == "vm" ]]; then
+    # move to feed btn at default win location at vm machine
+    ydotool mousemove --absolute -x 200 -y 145
+    sleep 0.8
+    ydotool click 0xC0
+    sleep 0.3
+    ydotool mousemove --absolute -x 280 -y 185
+    ydotool click 0xC0
+    sleep 0.3
   else
     # default setup with win on center
     ydotool mousemove --absolute -x 230 -y 155
@@ -129,6 +138,8 @@ action_feed() {
     ydotool click 0xC0
     sleep 1    
   fi
+
+
 
   ydotool key 13:1 13:0
   #echo type =| dotool
