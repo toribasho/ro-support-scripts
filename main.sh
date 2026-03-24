@@ -1,1 +1,1 @@
-main-ms.sh
+main-bragi.sh
