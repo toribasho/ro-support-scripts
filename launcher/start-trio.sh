@@ -71,8 +71,36 @@ launch_client() {
   # ready fro char select?
 }
 
-launch_client 1 
-sleep 1
-launch_client 2
-sleep 1
-launch_client 3 
+# 2. Check if "All" is anywhere in the arguments
+if [[ " $@ " =~ " All " ]]; then
+  echo "All services selected."
+  launch_client 1 
+  sleep 1
+  launch_client 2
+  sleep 1
+  launch_client 3 
+  exit 0
+fi
+
+# 3. Loop through all arguments ($@)
+for arg in "$@"; do
+    case "$arg" in
+        "Linker")
+            launch_client 1 
+            ;;
+        "Bragi")
+            launch_client 2
+            ;;
+        "Prof")
+            launch_client 3 
+            ;;
+        "Alcaster")
+#            launch_client 4 
+# not implemented
+            ;;
+        *)
+            echo "Skipping unknown option: $arg"
+            ;;
+    esac
+done
+
