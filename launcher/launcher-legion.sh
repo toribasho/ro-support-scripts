@@ -32,7 +32,7 @@ while true; do
     # If User hits Enter or clicks CONFIRM, finish and output
     if [[ "$clean_choice" == "CONFIRM" || $exit_code -eq 0 ]]; then
         echo "Final selections: ${selected[*]}"
-        ssh tinny-arch "~/Games/launcher/start-trio.sh ${selected[*]}"
+        ssh tiny-arch "~/Games/launcher/start-trio.sh ${selected[*]}"
         break
     fi
 
