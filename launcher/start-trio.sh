@@ -1,13 +1,26 @@
-BOTTLES_WP=5
+#!/bin/bash
+
+# --- Environment "Stealing" for SSH (Corrected Path) ---
+if [ -z "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
+    # Define the runtime directory
+    USER_ID=$(id -u)
+    export XDG_RUNTIME_DIR="/run/user/$USER_ID"
+    
+    # Find the signature in the user-specific runtime path
+    # We look for the directory that isn't 'hyprctl'
+    export HYPRLAND_INSTANCE_SIGNATURE=$(ls "$XDG_RUNTIME_DIR/hypr" | grep -v "hyprctl" | head -n 1)
+fi
+
+BOTTLES_WP=6
 CURRENT_WP=`hyprctl activeworkspace -j | jq '.id'`
 TTG_Start=true
+BOTTLES_WP_ID=$((1+$BOTTLES_WP))
 
 switch_to_bottles() {
-  if [[ (( `hyprctl activeworkspace -j | jq '.id'` -ne 5 )) ]]; then
+  if [[ (( `hyprctl activeworkspace -j | jq '.id'` -ne $BOTTLES_WP )) ]]; then
     echo "alt tab to Bottles: $(date)"
-    ydotool key 125:1 6:1 125:0 6:0
+    ydotool key 125:1 $((BOTTLES_WP_ID)):1 125:0 $((BOTTLES_WP_ID)):0
     sleep 0.5
-    CURRENT_WP=5
   fi
 }
 
@@ -31,6 +44,9 @@ launch_client() {
   
   # wait for laucher
   sleep 10
+  if (( $NUM == 1 )); then
+    sleep 3
+  fi
 
   # point to login btn
   ydotool mousemove --absolute -x 305 -y 165
@@ -53,11 +69,17 @@ launch_client() {
   elif (( $NUM == 3 )); then
     # Naoo
     ydotool key 49:1 49:0 30:1 30:0 24:1 24:0 28:1 28:0
+  elif (( $NUM == 4 )); then
+    # Alcaster
+    ydotool key 30:1 30:0 38:1 38:0 46:1 46:0 28:1 28:0
   else
     echo "Unknown param! "$NUM
   fi
   ydotool key 28:1 28:0
   sleep 5
+
+  ydotool click 0xC0
+  sleep 0.1
 
   ydotool key 28:1 28:0
   sleep 1
@@ -95,8 +117,7 @@ for arg in "$@"; do
             launch_client 3 
             ;;
         "Alcaster")
-#            launch_client 4 
-# not implemented
+            launch_client 4 
             ;;
         *)
             echo "Skipping unknown option: $arg"
