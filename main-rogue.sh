@@ -110,7 +110,11 @@ action_link_rogue() {
   sleep 0.5
 
   # move to 1st slot
-  ydotool mousemove --absolute -x 423 -y 235
+  #ydotool mousemove --absolute -x 423 -y 235
+  # 2nd slot
+  ydotool mousemove --absolute -x 423 -y 247
+  # 5th slot
+  #ydotool mousemove --absolute -x 423 -y 283
   # move to 5th slot
   # ydotool mousemove --absolute -x 190 -y 180
   sleep 0.3
@@ -209,11 +213,61 @@ action_throw_bers() {
 }
 
 
+action_bragi() {
+
+  if [[ (( "$WINDOW" -ne 3 )) ]]; then
+    echo "alt tab back to BS: $(date)"
+    #echo key Super+3 | dotool
+    ydotool key 125:1 4:1 125:0 4:0
+    sleep 0.5
+    WINDOW=3
+  fi
+
+  echo "Bragi: $(date)"
+
+  #echo type z| dotool
+  ydotool key 30:1 30:0
+  sleep 0.5
+}
+
+action_bragi_new() {
+
+  if [[ (( "$WINDOW" -ne 3 )) ]]; then
+    echo "alt tab back to BS: $(date)"
+    #echo key Super+3 | dotool
+    ydotool key 125:1 4:1 125:0 4:0
+    sleep 0.5
+    WINDOW=3
+  fi
+
+  echo "Bragi: $(date)"
+
+  # W for bragi
+  ydotool key 17:1 17:0
+  sleep 0.5
+}
+
+action_cancel_bragi() {
+  if [[ (( "$WINDOW" -ne 3 )) ]]; then
+    echo "alt tab back to BS: $(date)"
+    #echo key Super+3 | dotool
+    ydotool key 125:1 4:1 125:0 4:0
+    sleep 0.5
+    WINDOW=3
+  fi
+
+  # swap wep for cancel Z-X
+  ydotool key 44:1 44:0
+  sleep 0.5
+  ydotool key 45:1 45:0
+  sleep 0.3
+}
+
 # SECTION FOR BS LINK ONCE IN 5 MIN
 if [ ! -f "$TIMESTAMP_FILE" ]; then
   touch "$TIMESTAMP_FILE"
   date +%s > "$TIMESTAMP_FILE"  # Store the current epoch time
-  action_link_bs
+  #action_link_bs
 fi
 
 last_run=$(cat "$TIMESTAMP_FILE")
@@ -221,7 +275,7 @@ current_time=$(date +%s)
 time_diff=$((current_time - last_run))
 
 if (( time_diff > 300 )); then  # 300 seconds = 5 minutes
-  action_link_bs
+  #action_link_bs
   # Update the timestamp after Action 2 is executed
   date +%s > "$TIMESTAMP_FILE"
 else
@@ -229,9 +283,34 @@ else
 fi
 ############ END ##################
 
+# SECTION FOR Bragi ONCE IN 3 MIN
+if [ ! -f "$TIMESTAMP_FILE_BR" ]; then
+  touch "$TIMESTAMP_FILE_BR"
+  date +%s > "$TIMESTAMP_FILE_BR"  # Store the current epoch time
+  action_bragi_new
+fi
+
+last_run_br=$(cat "$TIMESTAMP_FILE_BR")
+current_time=$(date +%s)
+time_diff=$((current_time - last_run_br))
+
+if (( time_diff > 6000 )); then  # 6000 seconds = 100 minutes
+  action_bragi_new
+  # Update the timestamp after Action 2 is executed
+  date +%s > "$TIMESTAMP_FILE_BR"
+elif (( time_diff > 170 )); then  # 170 seconds = < 3 minutes
+  action_cancel_bragi
+  action_bragi
+  # Update the timestamp after Action 2 is executed
+  date +%s > "$TIMESTAMP_FILE_BR"
+else
+  echo "Skipping Action BS LINK. Only $(($time_diff / 60)) minutes and $((time_diff % 60)) seconds have passed."
+fi
+############ END ##################
+
 
 action_link_rogue
-action_bs_buff
+#action_bs_buff
 
 
 if [[ "$RERUN" == "false" ]]; then

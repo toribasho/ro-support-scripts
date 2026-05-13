@@ -12,7 +12,7 @@ RERUN=false
 WINDOW=4
 
 ### BRIEF ###
-# BS at 2nd slot
+# BS at 4th slot
 # #####
 
 check_another_instances() {
@@ -76,9 +76,13 @@ action_link_bs() {
 
   # move to 2nd slot
   # win at right bottom
-  ydotool mousemove --absolute -x 423 -y 248 
-  # win at mid left top
-  #ydotool mousemove --absolute -x 190 -y 140
+#  ydotool mousemove --absolute -x 423 -y 260
+  # 2nd 
+  #ydotool mousemove --absolute -x 423 -y 248 
+  # 4th
+  ydotool mousemove --absolute -x 423 -y 272 
+  # 5th
+  #ydotool mousemove --absolute -x 423 -y 284 
   sleep 0.3
 
   # click on BS
@@ -237,6 +241,13 @@ action_bragi_new() {
 
 action_cancel_bragi() {
   # swap wep for cancel
+  if [[ (( "$WINDOW" -ne 3 )) ]]; then
+    echo "alt tab back to BS: $(date)"
+    #echo key Super+3 | dotool
+    ydotool key 125:1 4:1 125:0 4:0
+    sleep 0.5
+    WINDOW=3
+  fi
   ydotool key 44:1 44:0
   sleep 0.3
   ydotool key 45:1 45:0
@@ -259,7 +270,13 @@ action_prof() {
   ydotool key 44:1 44:0
 
   # move to 1st slot on right bottom
-  ydotool mousemove --absolute -x 423 -y 236
+  #ydotool mousemove --absolute -x 423 -y 236
+  # 2nd
+  ydotool mousemove --absolute -x 423 -y 248
+  # 4th
+  #ydotool mousemove --absolute -x 423 -y 272
+  # 5th
+  #ydotool mousemove --absolute -x 423 -y 284
   sleep 0.5
 
   # click 

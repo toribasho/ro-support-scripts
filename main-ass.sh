@@ -6,6 +6,9 @@ TIMESTAMP_A_FILE="/tmp/.last_bers_timestamp"
 ALTTAB_DELAY=0.5
 SKILL_DELAY=0.3
 
+LINK_SLOT=4
+PROF_SLOT=4
+
 RERUN=false
 #RERUN=true
 
@@ -163,7 +166,9 @@ action_link_ass() {
 
   # move to 1st slot
   # win at right bottom
-  ydotool mousemove --absolute -x 423 -y 261
+  ydotool mousemove --absolute -x 423 -y 236
+  # 4th slot
+  #ydotool mousemove --absolute -x 423 -y 271
   # win at mid left top
   #ydotool mousemove --absolute -x 190 -y 140
   sleep 0.3
@@ -238,7 +243,11 @@ action_prof() {
   ydotool key 44:1 44:0
 
   # move to 1st slot on right bottom
-  ydotool mousemove --absolute -x 423 -y 236
+  #ydotool mousemove --absolute -x 423 -y 236
+  # 4th
+  #ydotool mousemove --absolute -x 423 -y 271
+  # 5th
+  ydotool mousemove --absolute -x 423 -y 283
   sleep 0.5
 
   # click 
@@ -309,8 +318,8 @@ action_prof
 
 if [[ "$RERUN" == "false" ]]; then
 #  ydotool key 125:1 5:1 125:0 5:0
-#  WINDOW=4
-#  sleep 0.5
+  WINDOW=4
+  sleep 0.5
 fi
 
 if [[ "$RERUN" == "true" ]]; then 
