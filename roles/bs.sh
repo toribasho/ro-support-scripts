@@ -54,8 +54,6 @@ action_bs() {
     sleep 0.5
   fi
 
-  action_link_bs
-   
-  fi
+  action_link_bs   
 }
 
