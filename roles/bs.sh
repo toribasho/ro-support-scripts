@@ -10,22 +10,22 @@ action_bs_buff() {
 
   echo "BS buffs: $(date)"
 
-  if [[ "$cast_far" == "true "]];then 
+  if [[ "$cast_far" == "true" ]]; then 
   # # Press Z
     ydotool key 44:1 44:0
     sleep 0.5
   fi
-  if [[ "$cast_ar" == "true "]];then 
+  if [[ "$cast_ar" == "true" ]]; then 
   # # Press X
     ydotool key 45:1 45:0
     sleep 0.5    
   fi
-  if [[ "$cast_ot" == "true "]];then 
+  if [[ "$cast_ot" == "true" ]]; then 
   # # Press C
     ydotool key 46:1 46:0
     sleep 0.5      
   fi
-  if [[ "$cast_wp" == "true "]];then 
+  if [[ "$cast_wp" == "true" ]]; then 
   # # Press V
     ydotool key 47:1 47:0
     sleep 0.5      

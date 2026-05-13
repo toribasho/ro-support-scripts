@@ -135,7 +135,7 @@ action_link() {
     ;;               
   *) 
     echo "Unknown role"
-    notify-send (("Unknown Link role: $role with slot $slot"))
+    notify-send $(("Unknown Link role: $role with slot $slot"))
     ;;
   esac
 

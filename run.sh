@@ -8,7 +8,7 @@ source "$SCRIPT_DIR/roles/linker.sh"
 source "$SCRIPT_DIR/roles/bragi.sh"
 source "$SCRIPT_DIR/roles/bs.sh"
 source "$SCRIPT_DIR/roles/prof.sh"
-source "$SCRIPT_DIR/roles/alch.sh"
+source "$SCRIPT_DIR/roles/alchemist.sh"
 
 source "$SCRIPT_DIR/buffer.config"
 
@@ -41,7 +41,7 @@ case "$main_role" in
     ;;                        
   *) 
     echo "Unknown role"
-    notify-send (("Unknown Link role: $main_role"))
+    notify-send $(("Unknown Link role: $main_role"))
     ;;
 esac
 
