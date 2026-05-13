@@ -10,7 +10,7 @@ action_prof() {
   local num_cast_indulge=${3:-1}
 
   local WINDOW=`hyprctl activeworkspace -j | jq '.id'`
-  local PROF_WINDOW=`hyprctl clients -j | jq -r '.[] | select(.title | test("Naoo")) | .workspace.id'`
+  local PROF_WINDOW=`hyprctl clients -j | jq -r '.[] | select(.class == "aocli.exe") | select(.title | test("Naoo")) | .workspace.id'`
   local YD_KEY=$((1+($PROF_WINDOW)))
 
   if [[ -z "$PROF_WINDOW" ]]; then

@@ -34,7 +34,7 @@ action_bard() {
   local TIMESTAMP_FILE="/tmp/.last_bragi_timestamp"
 
   local WINDOW=`hyprctl activeworkspace -j | jq '.id'`
-  local BRAGI_WINDOW=`hyprctl clients -j | jq -r '.[] | select(.title | test("Clampsi")) | .workspace.id'`
+  local BRAGI_WINDOW=`hyprctl clients -j | jq -r '.[] | select(.class == "aocli.exe") | select(.title | test("Clampsi")) | .workspace.id'`
   local YD_KEY=$((1+($BRAGI_WINDOW)))
 
   if [[ -z "$BRAGI_WINDOW" ]]; then

@@ -8,14 +8,6 @@
 action_throw_bers() {
   echo "Throw bers from Alch: $(date)"
 
-  if [[ (( "$WINDOW" -ne 4 )) ]]; then
-    echo "alt + tab to Alch: $(date)"
-    #echo key Super+4 | dotool
-    ydotool key 125:1 5:1 125:0 5:0
-    sleep 0.3
-    WINDOW=4
-  fi
-
   # press x for Bererk Pot Pitcher
   ydotool key 45:1 45:0
   sleep 0.5
@@ -34,7 +26,7 @@ action_alch() {
   local TIMESTAMP_A_FILE="/tmp/.last_bers_timestamp"
 
   local WINDOW=`hyprctl activeworkspace -j | jq '.id'`
-  local ALCH_WINDOW=`hyprctl clients -j | jq -r '.[] | select(.title | test("Alcaster")) | .workspace.id'`
+  local ALCH_WINDOW=`hyprctl clients -j | jq -r '.[] | select(.class == "aocli.exe") | select(.title | test("Alcaster")) | .workspace.id'`
   local YD_KEY=$((1+($ALCH_WINDOW)))
 
   if [[ -z "$ALCH_WINDOW" ]]; then
@@ -42,6 +34,12 @@ action_alch() {
     return -1
   fi
 
+  if [[ (( "$WINDOW" -ne $ALCH_WINDOW )) ]]; then
+    echo "alt + tab to Alch: $(date)"
+    ydotool key 125:1 $((YD_KEY)):1 125:0 $((YD_KEY)):0
+    sleep 0.3
+  fi
+  
   local last_run_a=$(cat "$TIMESTAMP_A_FILE")
   local current_time_a=$(date +%s)
   local time_diff_a=$((current_time_a - last_run_a))

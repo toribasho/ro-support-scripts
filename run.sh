@@ -1,15 +1,16 @@
 #!/bin/bash
 
 main_role=${1:-"none"}
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
 
 # global roles with call-actions
-source ./roles/linker.sh
-source ./roles/bragi.sh
-source ./roles/bs.sh
-source ./roles/prof.sh
-source ./roles/alch.sh
+source "$SCRIPT_DIR/roles/linker.sh"
+source "$SCRIPT_DIR/roles/bragi.sh"
+source "$SCRIPT_DIR/roles/bs.sh"
+source "$SCRIPT_DIR/roles/prof.sh"
+source "$SCRIPT_DIR/roles/alch.sh"
 
-source buffer.config
+source "$SCRIPT_DIR/buffer.config"
 
 case "$main_role" in
   "all-about-zeny")

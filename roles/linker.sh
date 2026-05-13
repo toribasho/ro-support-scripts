@@ -11,12 +11,6 @@ action_link_bs() {
 
   echo "Link BS: $(date)"
 
-  if [[ (( "$WINDOW" -ne "$LINK_WINDOW" )) ]]; then
-    echo "alt + tab to linker: $(date)"
-    ydotool key 125:1 $((YD_KEY)):1 125:0 $((YD_KEY)):0
-    sleep 0.5
-  fi
-
   # press Q for BS link
   ydotool key 16:1 16:0
   sleep 0.3
@@ -34,12 +28,6 @@ action_link_rogue() {
   local slot=${1:-1}
 
   echo "Link ROGUE: $(date)"
-
-  if [[ (( "$WINDOW" -ne "$LINK_WINDOW" )) ]]; then
-    echo "alt + tab to linker: $(date)"
-    ydotool key 125:1 $((YD_KEY)):1 125:0 $((YD_KEY)):0
-    sleep 0.3
-  fi
 
   # press w for Rogue link
   ydotool key 17:1 17:0
@@ -59,12 +47,6 @@ action_link_sage() {
 
   echo "Link SAGE: $(date)"
 
-  if [[ (( "$WINDOW" -ne "$LINK_WINDOW" )) ]]; then
-    echo "alt + tab to linker: $(date)"
-    ydotool key 125:1 $((YD_KEY)):1 125:0 $((YD_KEY)):0
-    sleep 0.3
-  fi
-
   # press w for Rogue link
   ydotool key 19:1 19:0
   sleep 0.5
@@ -83,12 +65,6 @@ action_link_alch() {
 
   echo "Link ALCH: $(date)"
 
-  if [[ (( "$WINDOW" -ne "$LINK_WINDOW" )) ]]; then
-    echo "alt + tab to linker: $(date)"
-    ydotool key 125:1 $((YD_KEY)):1 125:0 $((YD_KEY)):0
-    sleep 0.3
-  fi
-
   # press a for Alchemist link
   ydotool key 30:1 30:0
   sleep 0.5
@@ -106,12 +82,6 @@ action_link_ass() {
   local slot=${1:-3}
 
   echo "Link aSS: $(date)"
-
-  if [[ (( "$WINDOW" -ne "$LINK_WINDOW" )) ]]; then
-    echo "alt + tab to linker: $(date)"
-    ydotool key 125:1 $((YD_KEY)):1 125:0 $((YD_KEY)):0
-    sleep 0.5
-  fi
 
   # press D for ass link
   ydotool key 32:1 32:0
@@ -133,12 +103,18 @@ action_link() {
   local slot=${2:-1}
 
   local WINDOW=`hyprctl activeworkspace -j | jq '.id'`
-  local LINK_WINDOW=`hyprctl clients -j | jq -r '.[] | select(.title | test("Light-the-Star")) | .workspace.id'`
+  local LINK_WINDOW=`hyprctl clients -j | jq -r '.[] | select(.class == "aocli.exe") | select(.title | test("Light-the-Star")) | .workspace.id'`
   local YD_KEY=$((1+($LINK_WINDOW)))
 
-    if [[ -z "$LINK_WINDOW" ]]; then
+  if [[ -z "$LINK_WINDOW" ]]; then
     echo "Looks like no linker running. Skipping role"
     return -1
+  fi  
+
+  if [[ (( "$WINDOW" -ne "$LINK_WINDOW" )) ]]; then
+    echo "alt + tab to linker: $(date)"
+    ydotool key 125:1 $((YD_KEY)):1 125:0 $((YD_KEY)):0
+    sleep 0.5
   fi  
 
   case "$role" in
