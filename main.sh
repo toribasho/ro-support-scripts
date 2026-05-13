@@ -1,1 +1,1 @@
-main-bragi.sh
+main-sp.sh
