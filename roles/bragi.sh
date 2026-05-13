@@ -34,8 +34,11 @@ action_bard() {
   local TIMESTAMP_FILE="/tmp/.last_bragi_timestamp"
 
   local WINDOW=`hyprctl activeworkspace -j | jq '.id'`
-  local BRAGI_WINDOW=`hyprctl clients -j | jq -r '.[] | select(.class == "aocli.exe") | select(.title | test("Clampsi")) | .workspace.id'`
+  echo "cur win is $WINDOW"
+  local BRAGI_WINDOW=`hyprctl clients -j | jq -r '.[] | select(.class == "steam_proton") | select(.title | test("Clampsi")) | .workspace.id'`
+  echo "bragi win is $BRAGI_WINDOW"
   local YD_KEY=$((1+($BRAGI_WINDOW)))
+  echo "YD_KEY is $YD_KEY"
 
   if [[ -z "$BRAGI_WINDOW" ]]; then
     echo "Looks like no bragi running. Skipping role"

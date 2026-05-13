@@ -40,7 +40,7 @@ action_bs() {
 
 
   local WINDOW=`hyprctl activeworkspace -j | jq '.id'`
-  local BS_WINDOW=`hyprctl clients -j | jq -r '.[] | select(.class == "aocli.exe") | select(.title | test("all-about-zeny")) | .workspace.id'`
+  local BS_WINDOW=`hyprctl clients -j | jq -r '.[] | select(.class == "steam_proton") | select(.title | test("all-about-zeny")) | .workspace.id'`
   local YD_KEY=$((1+($BS_WINDOW)))
 
   if [[ -z "$BS_WINDOW" ]]; then

@@ -52,7 +52,7 @@ case "$main_role" in
     ;;                        
   *) 
     echo "Unknown role"
-    notify-send $(("Unknown Link role: $main_role"))
+    notify-send "Unknown Link role: $main_role"
     ;;
 esac
 

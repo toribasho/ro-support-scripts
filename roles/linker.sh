@@ -103,7 +103,7 @@ action_link() {
   local slot=${2:-1}
 
   local WINDOW=`hyprctl activeworkspace -j | jq '.id'`
-  local LINK_WINDOW=`hyprctl clients -j | jq -r '.[] | select(.class == "aocli.exe") | select(.title | test("Light-the-Star")) | .workspace.id'`
+  local LINK_WINDOW=`hyprctl clients -j | jq -r '.[] | select(.class == "steam_proton") | select(.title | test("Light-the-Star")) | .workspace.id'`
   local YD_KEY=$((1+($LINK_WINDOW)))
 
   if [[ -z "$LINK_WINDOW" ]]; then
