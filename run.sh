@@ -49,7 +49,11 @@ case "$main_role" in
   "Torizavr")
     action_bard 
     action_prof $champ_prof_slot
-    ;;                        
+    ;;        
+  "HuntEmDown")
+    action_bard 
+    action_prof $hunt_prof_slot
+    ;;                          
   *) 
     echo "Unknown role"
     notify-send "Unknown Link role: $main_role"
