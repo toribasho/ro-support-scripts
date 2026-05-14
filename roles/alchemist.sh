@@ -27,12 +27,14 @@ action_alch() {
 
   local WINDOW=`hyprctl activeworkspace -j | jq '.id'`
   local ALCH_WINDOW=`hyprctl clients -j | jq -r '.[] | select(.class == "steam_proton") | select(.title | test("Alcaster")) | .workspace.id'`
-  local YD_KEY=$((1+($ALCH_WINDOW)))
+  
 
   if [[ -z "$ALCH_WINDOW" ]]; then
     echo "Looks like no alchemist running. Skipping role"
     return -1
   fi
+
+  local YD_KEY=$((1+($ALCH_WINDOW)))
 
   if [[ (( "$WINDOW" -ne $ALCH_WINDOW )) ]]; then
     echo "alt + tab to Alch: $(date)"

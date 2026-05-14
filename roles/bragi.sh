@@ -37,14 +37,15 @@ action_bard() {
   echo "cur win is $WINDOW"
   local BRAGI_WINDOW=`hyprctl clients -j | jq -r '.[] | select(.class == "steam_proton") | select(.title | test("Clampsi")) | .workspace.id'`
   echo "bragi win is $BRAGI_WINDOW"
-  local YD_KEY=$((1+($BRAGI_WINDOW)))
-  echo "YD_KEY is $YD_KEY"
 
   if [[ -z "$BRAGI_WINDOW" ]]; then
     echo "Looks like no bragi running. Skipping role"
     return -1
   fi
   
+  local YD_KEY=$((1+($BRAGI_WINDOW)))
+  echo "YD_KEY is $YD_KEY"
+
   if [[ (( "$WINDOW" -ne "$BRAGI_WINDOW" )) ]]; then
     echo "Pick bragi window: $(date)"
     ydotool key 125:1 $((YD_KEY)):1 125:0 $((YD_KEY)):0

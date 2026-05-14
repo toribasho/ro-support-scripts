@@ -41,12 +41,13 @@ action_bs() {
 
   local WINDOW=`hyprctl activeworkspace -j | jq '.id'`
   local BS_WINDOW=`hyprctl clients -j | jq -r '.[] | select(.class == "steam_proton") | select(.title | test("all-about-zeny")) | .workspace.id'`
-  local YD_KEY=$((1+($BS_WINDOW)))
 
   if [[ -z "$BS_WINDOW" ]]; then
     echo "Looks like no bragi running. Skipping role"
     return -1
   fi
+
+  local YD_KEY=$((1+($BS_WINDOW)))
 
   if [[ (( "$WINDOW" -ne "$BS_WINDOW" )) ]]; then
     echo "alt tab back to BS: $(date)"

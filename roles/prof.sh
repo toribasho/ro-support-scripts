@@ -11,12 +11,14 @@ action_prof() {
 
   local WINDOW=`hyprctl activeworkspace -j | jq '.id'`
   local PROF_WINDOW=`hyprctl clients -j | jq -r '.[] | select(.class == "steam_proton") | select(.title | test("Naoo")) | .workspace.id'`
-  local YD_KEY=$((1+($PROF_WINDOW)))
+
 
   if [[ -z "$PROF_WINDOW" ]]; then
     echo "Looks like no prof running. Skipping role"
     return -1
   fi  
+
+  local YD_KEY=$((1+($PROF_WINDOW)))
 
   if [[ (( "$WINDOW" -ne "$PROF_WINDOW" )) ]]; then
     echo "alt tab back to Prof: $(date)"
