@@ -33,7 +33,7 @@ case "$main_role" in
     action_bard 
     action_prof $prof_rogue_slot
     action_link "ms" $ms_link_slot
-    action_link $main_role $rogue_link_slot
+    action_link "rogue" $rogue_link_slot
     action_bs
     ;;
   "Junopie")
