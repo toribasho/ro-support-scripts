@@ -20,14 +20,14 @@ action_bs_buff() {
     ydotool key 45:1 45:0
     sleep 0.5    
   fi
-  if [[ "$cast_ot" == "true" ]]; then 
-  # # Press C
-    ydotool key 46:1 46:0
-    sleep 0.5      
-  fi
+  # if [[ "$cast_ot" == "true" ]]; then 
+  # # # Press C
+  #   ydotool key 46:1 46:0
+  #   sleep 0.5      
+  # fi
   if [[ "$cast_wp" == "true" ]]; then 
-  # # Press V
-    ydotool key 47:1 47:0
+  # # # Press C
+  #   ydotool key 46:1 46:0
     sleep 0.5      
   fi      
 }
