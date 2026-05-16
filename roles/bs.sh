@@ -26,8 +26,8 @@ action_bs_buff() {
   #   sleep 0.5      
   # fi
   if [[ "$cast_wp" == "true" ]]; then 
-  # # # Press C
-  #   ydotool key 46:1 46:0
+  # # Press C
+    ydotool key 46:1 46:0
     sleep 0.5      
   fi      
 }
