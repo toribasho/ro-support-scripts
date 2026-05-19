@@ -11,10 +11,11 @@ if [ -z "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
     export HYPRLAND_INSTANCE_SIGNATURE=$(ls "$XDG_RUNTIME_DIR/hypr" | grep -v "hyprctl" | head -n 1)
 fi
 
-BOTTLES_WP=6
+BOTTLES_WP=10
 CURRENT_WP=`hyprctl activeworkspace -j | jq '.id'`
-TTG_Start=true
+FriendList_Open=true
 BOTTLES_WP_ID=$((1+$BOTTLES_WP))
+FIRST_RUN=true
 
 switch_to_bottles() {
   if [[ (( `hyprctl activeworkspace -j | jq '.id'` -ne $BOTTLES_WP )) ]]; then
@@ -44,8 +45,9 @@ launch_client() {
   
   # wait for laucher
   sleep 10
-  if (( $NUM == 1 )); then
+  if (( $FIRST_RUN == "true" )); then
     sleep 3
+    FIRST_RUN=false
   fi
 
   # point to login btn
@@ -72,6 +74,9 @@ launch_client() {
   elif (( $NUM == 4 )); then
     # Alcaster
     ydotool key 30:1 30:0 38:1 38:0 46:1 46:0 28:1 28:0
+  elif (( $NUM == 5 )); then
+    # Alcaster
+    ydotool key 44:1 44:0 18:1 18:0 49:1 49:0 28:1 28:0
   else
     echo "Unknown param! "$NUM
   fi
@@ -79,22 +84,26 @@ launch_client() {
   sleep 5
 
   ydotool click 0xC0
-  sleep 0.1
+  sleep 0.2
 
   ydotool key 28:1 28:0
   sleep 1
   ydotool key 28:1 28:0
   sleep 1
-  if (( $TTG_Start == "true" )); then
-    ydotool key 28:1 28:0
-    sleep 1
+  # select char
+  ydotool key 28:1 28:0
+  sleep 1
+
+  if (( $NUM == 1 or $NUM == 3 )); then
+    sleep 2
+    # open friend list
+    ydotool key 56:1 35:1 56:0 35:0
+    sleep 0.3
   fi
-
-  # ready fro char select?
 }
 
 # 2. Check if "All" is anywhere in the arguments
-if [[ " $@ " =~ " All " ]]; then
+if [[ " $@ " =~ " Trio " ]]; then
   echo "All services selected."
   launch_client 1 
   sleep 1
@@ -119,6 +128,9 @@ for arg in "$@"; do
         "Alcaster")
             launch_client 4 
             ;;
+        "All-about-zeny")
+            launch_client 5
+            ;;            
         *)
             echo "Skipping unknown option: $arg"
             ;;

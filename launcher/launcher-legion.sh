@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Configuration
-options=("All" "Linker" "Bragi" "Prof" "Alcaster")
-selected=("All")
+options=("Trio" "Linker" "Bragi" "Prof" "Alcaster" "All-about-zeny")
+selected=("Trio")
 
 while true; do
     # 1. Prepare the menu list with [x] or [ ]
@@ -36,18 +36,18 @@ while true; do
         break
     fi
 
-    # 3. Toggle Logic with "All" behavior
-    if [[ "$clean_choice" == "All" ]]; then
-        # If "All" is picked, clear everything else and just keep "All"
-        if [[ " ${selected[*]} " =~ " All " ]]; then
+    # 3. Toggle Logic with "Trio" behavior
+    if [[ "$clean_choice" == "Trio" ]]; then
+        # If "Trio" is picked, clear everything else and just keep "Trio"
+        if [[ " ${selected[*]} " =~ " Trio " ]]; then
             selected=()
         else
-            selected=("All")
+            selected=("Trio")
         fi
     else
         # If a regular option is picked:
-        # a) Remove "All" from the list (since we are picking specifics)
-        selected=(${selected[@]/All/})
+        # a) Remove "Trio" from the list (since we are picking specifics)
+        selected=(${selected[@]/Trio/})
 
         # b) Toggle the current choice
         if [[ " ${selected[*]} " =~ " ${clean_choice} " ]]; then
