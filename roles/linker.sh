@@ -31,7 +31,7 @@ action_link_rogue() {
 
   # press w for Rogue link
   ydotool key 17:1 17:0
-  sleep 0.5
+  sleep 0.3
 
   # move to slot on right bottom
   ydotool mousemove --absolute -x 423 -y $((236+12*($slot-1)))
@@ -49,15 +49,15 @@ action_link_sage() {
 
   # press w for Rogue link
   ydotool key 19:1 19:0
-  sleep 0.5
+  sleep 0.3
 
   # move to slot on right bottom
   ydotool mousemove --absolute -x 423 -y $((236+12*($slot-1)))
-  sleep 0.5
+  sleep 0.3
 
   # click on sage
   ydotool click 0xC0;
-  sleep 0.5
+  sleep 0.3
 }
 
 action_link_alch() {
@@ -67,15 +67,15 @@ action_link_alch() {
 
   # press a for Alchemist link
   ydotool key 30:1 30:0
-  sleep 0.5
+  sleep 0.3
 
   # move to slot on right bottom
   ydotool mousemove --absolute -x 423 -y $((236+12*($slot-1)))
-  sleep 0.5
+  sleep 0.3
 
   # click on char
   ydotool click 0xC0;
-  sleep 0.5
+  sleep 0.3
 }
 
 action_link_ass() {
@@ -97,7 +97,6 @@ action_link_ass() {
   sleep 0.3
 }
 
-
 action_link() {
   local role=${1:-"none"}
   local slot=${2:-1}
@@ -115,7 +114,7 @@ action_link() {
   if [[ (( "$WINDOW" -ne "$LINK_WINDOW" )) ]]; then
     echo "alt + tab to linker: $(date)"
     ydotool key 125:1 $((YD_KEY)):1 125:0 $((YD_KEY)):0
-    sleep 0.5
+    sleep 0.2
   fi  
 
   case "$role" in

@@ -38,7 +38,6 @@ action_bs() {
   local cast_ot=${3:-false} # Over-Thrust
   local cast_wp=${4:-false} # Weapon-Perfection
 
-
   local WINDOW=`hyprctl activeworkspace -j | jq '.id'`
   local BS_WINDOW=`hyprctl clients -j | jq -r '.[] | select(.class == "steam_proton") | select(.title | test("all-about-zeny")) | .workspace.id'`
 
@@ -52,7 +51,7 @@ action_bs() {
   if [[ (( "$WINDOW" -ne "$BS_WINDOW" )) ]]; then
     echo "alt tab back to BS: $(date)"
     ydotool key 125:1 $((YD_KEY)):1 125:0 $((YD_KEY)):0
-    sleep 0.5
+    sleep 0.2
   fi
 
   action_bs_buff   

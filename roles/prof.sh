@@ -24,7 +24,7 @@ action_prof() {
     echo "alt tab back to Prof: $(date)"
   
     ydotool key 125:1 $((YD_KEY)):1 125:0 $((YD_KEY)):0
-    sleep 0.5
+    sleep 0.2
   fi
 
   echo "Prof: $(date)"
@@ -34,7 +34,7 @@ action_prof() {
 
   # move to slot on right bottom
   ydotool mousemove --absolute -x 423 -y $((236+12*($slot-1)))
-  sleep 0.5
+  sleep 0.2
 
   # click 
   ydotool click 0xC0;
