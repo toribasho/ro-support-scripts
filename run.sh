@@ -20,20 +20,24 @@ source "$SCRIPT_DIR/roles/bragi.sh"
 source "$SCRIPT_DIR/roles/bs.sh"
 source "$SCRIPT_DIR/roles/prof.sh"
 source "$SCRIPT_DIR/roles/alchemist.sh"
-
+# friend list order
 source "$SCRIPT_DIR/buffer.config"
 
 case "$main_role" in
   "all-about-zeny")
-    action_bard 
+    if [[ -z check_for_role "bard" ]]; then
+      action_bard 
+    fi
     action_link "ms" $ms_link_slot
     action_prof $ms_prof_slot
     ;;
   "Toribash")
     action_bard 
-    action_link "ms" $ms_link_slot
     action_link "rogue" $rogue_link_slot
-    action_bs true false false true
+    if [[ -z check_for_role "ms" ]]; then
+      action_link "ms" $ms_link_slot
+      action_bs true false false true
+    fi
     ;;
   "Junopie")
     action_bard 
