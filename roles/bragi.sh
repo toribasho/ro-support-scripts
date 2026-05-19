@@ -4,7 +4,6 @@
 # Specify:
 # [1] - [bragi]/ass = choose songs
 
-
 action_bragi() {
   echo "Bragi: $(date)"
   
@@ -49,7 +48,7 @@ action_bard() {
   if [[ (( "$WINDOW" -ne "$BRAGI_WINDOW" )) ]]; then
     echo "Pick bragi window: $(date)"
     ydotool key 125:1 $((YD_KEY)):1 125:0 $((YD_KEY)):0
-    sleep 0.5
+    sleep 0.2
   fi
 
   if [ ! -f "$TIMESTAMP_FILE" ]; then
@@ -62,9 +61,12 @@ action_bard() {
   local current_time=$(date +%s)
   local time_diff=$((current_time - last_run))
 
-  if (( time_diff > 6000 )); then  # 6000 seconds = 100 minutes
+  if (( time_diff > 600 )); then  # 600 seconds = 10 minutes
     action_bragi_new
     # Update the timestamp after Action 2 is executed
+    date +%s > "$TIMESTAMP_FILE"
+  elif (( time_diff > 170 )); then  # 180 seconds =  3 minutes
+    action_bragi
     date +%s > "$TIMESTAMP_FILE"
   elif (( time_diff > 170 )); then  # 170 seconds = < 3 minutes
     action_cancel_bragi
