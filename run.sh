@@ -36,7 +36,7 @@ case "$main_role" in
   "Toribash")
     action_bard 
     action_link "rogue" $rogue_link_slot
-    if [[ -n `check_for_role "ms"`` ]]; then
+    if [[ -n `check_for_role "ms"` ]]; then
       action_link "ms" $ms_link_slot
       action_bs true false false true
     fi
