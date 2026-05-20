@@ -20,8 +20,10 @@ source "$SCRIPT_DIR/roles/bragi.sh"
 source "$SCRIPT_DIR/roles/bs.sh"
 source "$SCRIPT_DIR/roles/prof.sh"
 source "$SCRIPT_DIR/roles/alchemist.sh"
-# friend list order
+# friend list order & global function
 source "$SCRIPT_DIR/buffer.config"
+
+check_for_bot
 
 case "$main_role" in
   "all-about-zeny")
@@ -56,12 +58,17 @@ case "$main_role" in
   "HuntEmDown")
     action_bard 
     action_prof $hunt_prof_slot
+    ;;               
+  "Zingal")
+    action_bard 
     ;;                          
   *) 
     echo "Unknown role"
     notify-send "Unknown Link role: $main_role"
     ;;
 esac
+
+call_the_bot
 
   # "sage")
   #   action_link_sage $slot
