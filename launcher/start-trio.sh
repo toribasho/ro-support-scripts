@@ -95,7 +95,7 @@ launch_client() {
   sleep 1
 
   if (( $NUM == 1 or $NUM == 3 )); then
-    sleep 2
+    sleep 4
     # open friend list
     ydotool key 56:1 35:1 56:0 35:0
     sleep 0.3
