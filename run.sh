@@ -61,7 +61,10 @@ case "$main_role" in
     ;;               
   "Zingal")
     action_bard 
-    ;;                          
+    ;;            
+  "fear-no-more")
+    action_prof 5 
+    ;;                           
   *) 
     echo "Unknown role"
     notify-send "Unknown Link role: $main_role"
