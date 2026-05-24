@@ -41,7 +41,7 @@ action_prof() {
   sleep 0.5
 
   if [[ "$cast_indulge" == "true" ]]; then
-    for ((cast=0; cast<num_cast_indulge; cast++));
+    for ((cast=0; cast<=num_cast_indulge; cast++));
     do 
       # X for Indulge
       ydotool key 45:1 45:0

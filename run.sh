@@ -63,7 +63,7 @@ case "$main_role" in
     action_bard 
     ;;            
   "fear-no-more")
-    action_prof 5 true 3
+    action_prof $abra_prof_slot true 3
     ;;                           
   *) 
     echo "Unknown role"
