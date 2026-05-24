@@ -33,7 +33,7 @@ action_prof() {
   ydotool key 44:1 44:0
 
   # move to slot on right bottom
-  ydotool mousemove --absolute -x 423 -y $((236+12*($slot-1)))
+  ydotool mousemove --absolute -x 423 -y $((224+12*($slot-1)))
   sleep 0.2
 
   # click 
