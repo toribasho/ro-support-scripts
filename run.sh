@@ -66,6 +66,7 @@ case "$main_role" in
     action_prof $abra_prof_slot true 3
     ;;                
   "Kimichani")
+    action_bard 
     action_prof 5 true 1
     ;;                    
   *) 
