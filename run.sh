@@ -67,7 +67,7 @@ case "$main_role" in
     ;;                
   "Kimichani")
     action_bard 
-    action_prof 5 true 1
+    action_prof 6 true 1
     ;;                    
   *) 
     echo "Unknown role"
