@@ -53,7 +53,7 @@ case "$main_role" in
     ;;
   "Torizavr")
     action_bard 
-    action_prof $champ_prof_slot true 3
+    action_prof $champ_prof_slot true 5
     ;;        
   "HuntEmDown")
     action_bard 
@@ -64,7 +64,10 @@ case "$main_role" in
     ;;            
   "fear-no-more")
     action_prof $abra_prof_slot true 3
-    ;;                           
+    ;;                
+  "Kimichani")
+    action_prof 5 true 1
+    ;;                    
   *) 
     echo "Unknown role"
     notify-send "Unknown Link role: $main_role"
