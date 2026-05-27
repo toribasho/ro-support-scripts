@@ -6,6 +6,8 @@
 # 1 - role
 # 2 - slot
 
+local firstPartySlot=224
+
 action_link_bs() {
   local slot=${1:-2}
 
@@ -16,7 +18,7 @@ action_link_bs() {
   sleep 0.3
 
   # move to slot on right bottom
-  ydotool mousemove --absolute -x 423 -y $((236+12*($slot-1)))
+  ydotool mousemove --absolute -x 423 -y $(($firstPartySlot+12*($slot-1)))
   sleep 0.3
 
   # click on BS
@@ -34,7 +36,7 @@ action_link_rogue() {
   sleep 0.3
 
   # move to slot on right bottom
-  ydotool mousemove --absolute -x 423 -y $((236+12*($slot-1)))
+  ydotool mousemove --absolute -x 423 -y $(($firstPartySlot+12*($slot-1)))
   sleep 0.3
 
   # click on Rogue
@@ -52,7 +54,7 @@ action_link_sage() {
   sleep 0.3
 
   # move to slot on right bottom
-  ydotool mousemove --absolute -x 423 -y $((236+12*($slot-1)))
+  ydotool mousemove --absolute -x 423 -y $(($firstPartySlot+12*($slot-1)))
   sleep 0.3
 
   # click on sage
@@ -70,7 +72,7 @@ action_link_alch() {
   sleep 0.3
 
   # move to slot on right bottom
-  ydotool mousemove --absolute -x 423 -y $((236+12*($slot-1)))
+  ydotool mousemove --absolute -x 423 -y $(($firstPartySlot+12*($slot-1)))
   sleep 0.3
 
   # click on char
@@ -89,7 +91,7 @@ action_link_ass() {
 
 
   # move to slot on right bottom
-  ydotool mousemove --absolute -x 423 -y $((224+12*($slot-1)))
+  ydotool mousemove --absolute -x 423 -y $(($firstPartySlot+12*($slot-1)))
   sleep 0.3
 
   # click
