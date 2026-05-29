@@ -71,7 +71,9 @@ case "$main_role" in
     ;;                    
   *) 
     echo "Unknown role"
-    notify-send "Unknown Link role: $main_role"
+    action_bard 
+    action_prof 6
+    # notify-send "Unknown Link role: $main_role"
     ;;
 esac
 
