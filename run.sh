@@ -68,12 +68,18 @@ case "$main_role" in
   "Kimichani")
     action_bard 
     action_prof 6 true 1
-    ;;                    
+    ;;            \
+  "Futabuki")
+    action_bard 
+    action_link "crus" $crus_link_slot
+    action_prof $crus_prof_slot
+    ;;                      
   *) 
     echo "Unknown role"
-    action_bard 
-    action_prof 6
-    # notify-send "Unknown Link role: $main_role"
+    # action_bard 
+    # action_prof 6
+    echo "Unknown role"
+    notify-send "Unknown Link role: $main_role"
     ;;
 esac
 
