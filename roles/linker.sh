@@ -6,7 +6,16 @@
 # 1 - role
 # 2 - slot
 
+action_link_click() {
+  local slot=${1:-3}
+  # move to slot on right bottom
+  ydotool mousemove --absolute -x 423 -y $(((224)+12*($slot-1)))
+  sleep 0.3
 
+  # click
+  ydotool click 0xC0;
+  sleep 0.3
+}
 
 action_link_bs() {
   local slot=${1:-2}
@@ -17,13 +26,7 @@ action_link_bs() {
   ydotool key 16:1 16:0
   sleep 0.3
 
-  # move to slot on right bottom
-  ydotool mousemove --absolute -x 423 -y $(((224)+12*($slot-1)))
-  sleep 0.3
-
-  # click on BS
-  ydotool click 0xC0;
-  sleep 0.3
+  action_link_click $slot
 }
 
 action_link_rogue() {
@@ -35,13 +38,7 @@ action_link_rogue() {
   ydotool key 17:1 17:0
   sleep 0.3
 
-  # move to slot on right bottom
-  ydotool mousemove --absolute -x 423 -y $(((224)+12*($slot-1)))
-  sleep 0.3
-
-  # click on Rogue
-  ydotool click 0xC0;
-  sleep 0.3
+  action_link_click $slot
 }
 
 action_link_sage() {
@@ -53,13 +50,7 @@ action_link_sage() {
   ydotool key 19:1 19:0
   sleep 0.3
 
-  # move to slot on right bottom
-  ydotool mousemove --absolute -x 423 -y $(((224)+12*($slot-1)))
-  sleep 0.3
-
-  # click on sage
-  ydotool click 0xC0;
-  sleep 0.3
+  action_link_click $slot
 }
 
 action_link_alch() {
@@ -71,13 +62,7 @@ action_link_alch() {
   ydotool key 30:1 30:0
   sleep 0.3
 
-  # move to slot on right bottom
-  ydotool mousemove --absolute -x 423 -y $(((224)+12*($slot-1)))
-  sleep 0.3
-
-  # click on char
-  ydotool click 0xC0;
-  sleep 0.3
+  action_link_click $slot
 }
 
 action_link_ass() {
@@ -90,14 +75,21 @@ action_link_ass() {
   sleep 0.3
 
 
-  # move to slot on right bottom
-  ydotool mousemove --absolute -x 423 -y $(((224)+12*($slot-1)))
+  action_link_click $slot
+}
+
+action_link_crus() {
+  local slot=${1:-3}
+
+  echo "Link aSS: $(date)"
+
+  # press F for crus link
+  ydotool key 33:1 33:0
   sleep 0.3
 
-  # click
-  ydotool click 0xC0;
-  sleep 0.3
+  action_link_click $slot
 }
+
 
 action_link() {
   local role=${1:-"none"}
@@ -134,7 +126,10 @@ action_link() {
     ;;
   "ass")
     action_link_ass $slot
-    ;;               
+    ;;       
+  "crus")
+    action_link_crus $slot
+    ;;        
   *) 
     echo "Unknown role"
     notify-send $(("Unknown Link role: $role with slot $slot"))
