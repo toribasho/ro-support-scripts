@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source "$SCRIPT_DIR/buffer.config"
+
 # Specify:
 # 1 - SLOT for SP exchange
 # [2] - true/faslse to cast indulge

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source "$SCRIPT_DIR/buffer.config"
+
 # Main function is action_link() in the bottom
 # works via friend lsit order
 # Specify:
