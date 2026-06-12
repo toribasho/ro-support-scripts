@@ -8,6 +8,10 @@
 
 action_link_click() {
   local slot=${1:-3}
+
+  # adjust slot in a scroll list ( up to 10 right now )
+  slot=$(get_real_slot($slot))
+
   # move to slot on right bottom
   ydotool mousemove --absolute -x 423 -y $(((224)+12*($slot-1)))
   sleep 0.3
