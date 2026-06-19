@@ -53,8 +53,8 @@ case "$main_role" in
     ;;
   "Torizavr")
     action_bard 
-    # action_prof $champ_prof_slot true 5
-    action_prof $champ_prof_slot
+    action_prof $champ_prof_slot true 4
+    # action_prof $champ_prof_slot
     ;;        
   "HuntEmDown")
     action_bard 
