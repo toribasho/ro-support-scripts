@@ -53,7 +53,8 @@ case "$main_role" in
     ;;
   "Torizavr")
     action_bard 
-    action_prof $champ_prof_slot true 5
+    # action_prof $champ_prof_slot true 5
+    action_prof $champ_prof_slot
     ;;        
   "HuntEmDown")
     action_bard 
@@ -68,7 +69,7 @@ case "$main_role" in
   "Kimichani")
     action_bard 
     action_prof 6 true 1
-    ;;            \
+    ;;            
   "Futabuki")
     action_bard 
     action_link "crus" $crus_link_slot
