@@ -11,6 +11,24 @@ if [ -z "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
     export HYPRLAND_INSTANCE_SIGNATURE=$(ls "$XDG_RUNTIME_DIR/hypr" | grep -v "hyprctl" | head -n 1)
 fi
 
+# 1. Check if locked
+if pgrep -x "hyprlock" > /dev/null; then
+    echo "System is locked. Initiating smart unlock..."
+    
+    # 2. Check if display is off, turn it on if necessary
+    if hyprctl monitors -j | jq -e '.[] | select(.dpmsStatus == false)' > /dev/null; then
+        hyprctl dispatch dpms on
+        # lua variant
+        # hyprctl dispatch 'hl.dsp.dpms({ action = "enable" })'
+        sleep 0.1 # Small buffer for the hardware to respond
+    fi
+    
+    # 3. Gracefully dismiss hyprlock
+    pkill -USR1 hyprlock
+else
+    echo "System is already unlocked. No action needed."
+fi
+
 BOTTLES_WP=10
 CURRENT_WP=`hyprctl activeworkspace -j | jq '.id'`
 FriendList_Open=true
