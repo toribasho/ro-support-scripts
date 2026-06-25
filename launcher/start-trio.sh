@@ -25,6 +25,9 @@ if pgrep -x "hyprlock" > /dev/null; then
     
     # 3. Gracefully dismiss hyprlock
     pkill -USR1 hyprlock
+
+    # wit for wakeup
+    sleep 3
 else
     echo "System is already unlocked. No action needed."
 fi
