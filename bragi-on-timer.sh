@@ -15,7 +15,7 @@ MODE="BRAGI"
 
 check_another_instances() {
   # Find processes matching the script name, excluding the current process
-  previous_pids=$(pgrep -f "main.sh" | grep -v "$$")
+  previous_pids=$(pgrep -f "bragi-on-timer.sh" | grep -v "$$")
 
   if [[ -n "$previous_pids" ]]; then
     RERUN=true
