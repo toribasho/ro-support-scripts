@@ -1,8 +1,10 @@
 #!/bin/bash
 
 # Configuration
-options=("Trio" "Linker" "Bragi" "Prof" "Alcaster" "All-about-zeny")
+options=("Trio" "Linker" "Bragi" "Prof" "Alcaster" "All-about-zeny" "Kimichani")
 selected=("Trio")
+
+host=$(cat /etc/hostname)
 
 while true; do
     # 1. Prepare the menu list with [x] or [ ]
@@ -32,7 +34,13 @@ while true; do
     # If User hits Enter or clicks CONFIRM, finish and output
     if [[ "$clean_choice" == "CONFIRM" || $exit_code -eq 0 ]]; then
         echo "Final selections: ${selected[*]}"
-        ~/Games/launcher/start-trio.sh ${selected[*]}
+        if [[ "$host" == "arch-legion" ]]; then
+            ssh tiny-arch "~/Games/launcher/start-trio.sh ${selected[*]}"
+        elif [[ "$host" == "tiny-arch" ]]; then
+            ~/Games/launcher/start-trio.sh ${selected[*]}
+        else
+            echo "Undefined host. Aborting...\nCheck /etc/hostname"
+        fi
         break
     fi
 
