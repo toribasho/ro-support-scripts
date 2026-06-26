@@ -28,7 +28,7 @@ action_cancel_service() {
   sleep 0.3
 }
 
-action_service() {
+action_dancer() {
   local mode=${1:-"service"}
   local TIMESTAMP_FILE="/tmp/.last_service_timestamp"
 
