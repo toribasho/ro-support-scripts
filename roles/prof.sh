@@ -6,10 +6,13 @@ source "$SCRIPT_DIR/buffer.config"
 # 1 - SLOT for SP exchange
 # [2] - true/faslse to cast indulge
 # [3] - Num of indulge cast
+# [4] - true/false to refollow after exchange
+
 action_prof() {
   local slot=${1:-1}
   local cast_indulge=${2:-false}
   local num_cast_indulge=${3:-1}
+  local refollow=${4:-false}
 
   local WINDOW=`hyprctl activeworkspace -j | jq '.id'`
   local PROF_WINDOW=`hyprctl clients -j | jq -r '.[] | select(.class == "steam_proton") | select(.title | test("Naoo")) | .workspace.id'`
@@ -53,4 +56,14 @@ action_prof() {
       sleep 1 # was 0.6
     done
   fi
+
+## DOESNT WORK
+  if [[ "$refollow" == true ]]; then
+    # move mouse to follow char
+    ydotool mousemove --absolute -x 260 -y 170
+    ydotool key 54:1
+    ydotool click 0xC1
+    ydotool key 54:0
+  fi
+
 }
