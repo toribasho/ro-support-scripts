@@ -2,7 +2,8 @@
 
 # Call action_bard
 # Specify:
-# [1] - [bragi]/ass = choose songs
+# [1] - force to call it again
+# [2] - [bragi]/ass = choose songs
 
 action_bragi() {
   echo "Bragi: $(date)"
@@ -29,7 +30,8 @@ action_cancel_bragi() {
 }
 
 action_bard() {
-  local mode=${1:-"bragi"}
+  local force=${1:-false}
+  local mode=${2:-"bragi"}
   local TIMESTAMP_FILE="/tmp/.last_bragi_timestamp"
 
   local WINDOW=`hyprctl activeworkspace -j | jq '.id'`
@@ -65,7 +67,7 @@ action_bard() {
     action_bragi_new
     # Update the timestamp after Action 2 is executed
     date +%s > "$TIMESTAMP_FILE"
-  elif (( time_diff > 170 && time_diff < 180 )); then  # 160 seconds =  3 minutes
+  elif (( time_diff > 170 && time_diff < 180 )) || (( $force == true )); then  # 160 seconds =  3 minutes
     action_cancel_bragi
     action_bragi
     date +%s > "$TIMESTAMP_FILE"

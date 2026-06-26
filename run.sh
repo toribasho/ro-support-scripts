@@ -58,9 +58,13 @@ case "$main_role" in
     # action_prof $champ_prof_slot
     ;;        
   "HuntEmDown")
-    action_bard
+    local force=false
+    if [[ -n `check_for_role "prof"` ]]; then
+      force=true
+    fi        
+    action_bard $force
     if [[ -n `check_for_role "dancer"` ]]; then
-      action_dancer 
+      action_dancer $force
     fi
     if [[ -n `check_for_role "prof"` ]]; then
       action_prof $hunt_prof_slot

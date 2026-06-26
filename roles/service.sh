@@ -2,7 +2,8 @@
 
 # Call  
 # Specify:
-# [1] - [service]/heart = choose songs ! TODO
+# [1] - force to call it again
+# [2] - [service]/heart = choose songs ! TODO
 
 action_service() {
   echo "service: $(date)"
@@ -29,7 +30,8 @@ action_cancel_service() {
 }
 
 action_dancer() {
-  local mode=${1:-"service"}
+  local force=${1:-false}
+  local mode=${2:-"service"}
   local TIMESTAMP_FILE="/tmp/.last_service_timestamp"
 
   local WINDOW=`hyprctl activeworkspace -j | jq '.id'`
@@ -65,7 +67,7 @@ action_dancer() {
     action_service_new
     # Update the timestamp after Action 2 is executed
     date +%s > "$TIMESTAMP_FILE"
-  elif (( time_diff > 170 && time_diff < 180 )); then  # 160 seconds =  3 minutes
+  elif (( time_diff > 170 && time_diff < 180 )) || (( $force == true )); then  # 160 seconds =  3 minutes
     action_cancel_service
     action_service
     date +%s > "$TIMESTAMP_FILE"
