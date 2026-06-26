@@ -17,6 +17,7 @@ fi
 # global roles with call-actions
 source "$SCRIPT_DIR/roles/linker.sh"
 source "$SCRIPT_DIR/roles/bragi.sh"
+source "$SCRIPT_DIR/roles/service.sh"
 source "$SCRIPT_DIR/roles/bs.sh"
 source "$SCRIPT_DIR/roles/prof.sh"
 source "$SCRIPT_DIR/roles/alchemist.sh"
@@ -57,8 +58,13 @@ case "$main_role" in
     # action_prof $champ_prof_slot
     ;;        
   "HuntEmDown")
-    action_bard 
-    action_prof $hunt_prof_slot
+    action_bard
+    if [[ -n `check_for_role "dancer"` ]]; then
+      action_dancer 
+    fi
+    if [[ -n `check_for_role "prof"` ]]; then
+      action_prof $hunt_prof_slot
+    fi    
     ;;               
   "Zingal")
     action_bard 
