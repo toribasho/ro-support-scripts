@@ -58,7 +58,7 @@ case "$main_role" in
     # action_prof $champ_prof_slot
     ;;        
   "HuntEmDown")
-    local force=false
+    local force=true
     if [[ -n `check_for_role "prof"` ]]; then
       force=true
     fi        
@@ -67,7 +67,7 @@ case "$main_role" in
       action_dancer $force
     fi
     if [[ -n `check_for_role "prof"` ]]; then
-      action_prof $hunt_prof_slot
+      action_prof $hunt_prof_slot true 1
     fi    
     ;;               
   "Zingal")
@@ -78,7 +78,7 @@ case "$main_role" in
     ;;                
   "Kimichani")
     action_bard 
-    action_prof 6 true 1
+    action_prof 8 true 1
     ;;            
   "Futabuki")
     action_bard 
