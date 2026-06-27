@@ -67,7 +67,7 @@ action_bard() {
     action_bragi_new
     # Update the timestamp after Action 2 is executed
     date +%s > "$TIMESTAMP_FILE"
-  elif (( time_diff > 170 && time_diff < 180 )) || (( $force == "true" )); then  # 160 seconds =  3 minutes
+  elif (( time_diff > 170 && time_diff < 180 )) || [[ $force == true ]]; then  # 160 seconds =  3 minutes
     action_cancel_bragi
     action_bragi
     date +%s > "$TIMESTAMP_FILE"
