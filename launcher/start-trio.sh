@@ -46,6 +46,42 @@ switch_to_bottles() {
   fi
 }
 
+convertToYdotool() {
+    local input="${1,,}" # Convert input to lowercase to simplify lookup
+    local sequence=""
+    local len=${#input}
+
+    # Loop through each character of the string
+    for (( i=0; i<len; i++ )); do
+        local char="${input:$i:1}"
+        local code=""
+
+        # Map characters to Linux keycodes
+        case "$char" in
+            a) code=30 ;; b) code=48 ;; c) code=46 ;; d) code=32 ;;
+            e) code=18 ;; f) code=33 ;; g) code=34 ;; h) code=35 ;;
+            i) code=23 ;; j) code=36 ;; k) code=37 ;; l) code=38 ;;
+            m) code=50 ;; n) code=49 ;; o) code=24 ;; p) code=25 ;;
+            q) code=16 ;; r) code=19 ;; s) code=31 ;; t) code=20 ;;
+            u) code=22 ;; v) code=47 ;; w) code=17 ;; x) code=45 ;;
+            y) code=21 ;; z) code=44 ;;
+            1) code=2  ;; 2) code=3  ;; 3) code=4  ;; 4) code=5  ;;
+            5) code=6  ;; 6) code=7  ;; 7) code=8  ;; 8) code=9  ;;
+            9) code=10 ;; 0) code=11 ;;
+            *) 
+                echo "Error: Unsupported character '$char'" >&2
+                return 1 
+                ;;
+        esac
+
+        # Append the press (:1) and release (:0) sequence
+        sequence+="${code}:1 ${code}:0 "
+    done
+
+    # Echo the final command string (trim trailing space)
+    echo "ydotool key ${sequence% }"
+}
+
 #ydotool mousemove --absolute -x 600 -y 215 (+30)
 
 launch_client() {
@@ -96,8 +132,11 @@ launch_client() {
     # Alcaster
     ydotool key 30:1 30:0 38:1 38:0 46:1 46:0 28:1 28:0
   elif (( $NUM == 5 )); then
-    # Alcaster
+    # all-about-zeny
     ydotool key 44:1 44:0 18:1 18:0 49:1 49:0 28:1 28:0
+  elif (( $NUM == 6 )); then
+    # Kimichani
+    $(convertToYdotool "chan")
   else
     echo "Unknown param! "$NUM
   fi
@@ -151,7 +190,10 @@ for arg in "$@"; do
             ;;
         "All-about-zeny")
             launch_client 5
-            ;;            
+            ;;
+        "Kimichani")
+            launch_client 6
+            ;;                        
         *)
             echo "Skipping unknown option: $arg"
             ;;
