@@ -1,5 +1,47 @@
 #!/bin/bash
 
+# --- Configuration ---
+# You can use the same file or a dedicated one for generic variables
+VAR_STATE_FILE="/tmp/bash_stored_vars.txt"
+
+# Ensure the file exists so we don't get errors later
+touch "$VAR_STATE_FILE"
+
+# --- Functions ---
+
+storeVar() {
+    local key="$1"
+    local value="$2"
+    
+    # 1. Clean out any old value for this specific key
+    # 2. Append the new key=value pair to the file
+    if [[ -f "$VAR_STATE_FILE" ]]; then
+        local temp_file
+        temp_file=$(mktemp)
+        grep -v "^${key}=" "$VAR_STATE_FILE" > "$temp_file"
+        mv "$temp_file" "$VAR_STATE_FILE"
+    fi
+    echo "${key}=${value}" >> "$VAR_STATE_FILE"
+}
+
+loadVar() {
+    local key="$1"
+    local default_value="$2"
+    local result=""
+    
+    if [[ -f "$VAR_STATE_FILE" ]]; then
+        # Find the value in the file
+        result=$(grep "^${key}=" "$VAR_STATE_FILE" | cut -d'=' -f2-)
+    fi
+
+    # If the result is empty, use the provided default value
+    if [[ -z "$result" ]]; then
+        echo "$default_value"
+    else
+        echo "$result"
+    fi
+}
+
 # Get the script's name (without the path)
 SCRIPT_NAME=$(basename "$0")
 
@@ -26,7 +68,7 @@ FEED_DALAY=600
 SLEEP_DALAY=23
 SLEEP_RND_DELAY=2
 
-LEFT=1
+LEFT=$(loadVar "MOVE_DIRECTION" 1)
 
 action_select_one() {
   echo "Select 1st char: $(date)"
@@ -93,6 +135,8 @@ action_move_on_spot(){
     LEFT=1
   fi
   
+  storeVar "MOVE_DIRECTION" "$LEFT"
+
   sleep 0.3
   ydotool click 0xC0
   sleep 1
