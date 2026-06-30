@@ -91,7 +91,7 @@ launch_client() {
   # point
   local NUM=$1
   echo $(( 215+30*(($NUM-1)) ))
-  ydotool mousemove --absolute -x 600 -y $((215+30*($NUM-1))) 
+  ydotool mousemove --absolute -x 600 -y $((215+29*($NUM-1))) 
   sleep 0.1
   ydotool click 0xC0;
   sleep 0.1
