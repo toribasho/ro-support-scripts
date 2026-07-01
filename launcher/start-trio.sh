@@ -136,7 +136,7 @@ launch_client() {
     ydotool key 44:1 44:0 18:1 18:0 49:1 49:0 28:1 28:0
   elif (( $NUM == 6 )); then
     # Kimichani
-    $(convertToYdotool "chan")
+    $(convertToYdotool "chur")
   else
     echo "Unknown param! "$NUM
   fi
@@ -191,7 +191,7 @@ for arg in "$@"; do
         "All-about-zeny")
             launch_client 5
             ;;
-        "Kimichani")
+        "Kimichuri")
             launch_client 6
             ;;                        
         *)
