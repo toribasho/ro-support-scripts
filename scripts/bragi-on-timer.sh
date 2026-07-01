@@ -120,8 +120,10 @@ if [[ $MODE == "BRAGI" ]]; then
 fi
 
 if [[ $MODE == "DUO" ]]; then
+  while true; do
     action_bragi
     sleep 1.5
     action_service
-    sleep 1.5
+    sleep 176
+  done
 fi
