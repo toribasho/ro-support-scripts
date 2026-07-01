@@ -124,6 +124,6 @@ if [[ $MODE == "DUO" ]]; then
     action_bragi
     sleep 0.5
     action_service
-    sleep 178
+    sleep 180
   done
 fi
