@@ -10,8 +10,8 @@ RERUN=false
 #RERUN=true
 
 WINDOW=3
-#MODE="DUO"
-MODE="BRAGI"
+MODE="DUO"
+#MODE="BRAGI"
 
 check_another_instances() {
   # Find processes matching the script name, excluding the current process
@@ -35,6 +35,22 @@ action_bragi() {
     echo "alt tab back to BS: $(date)"
     #echo key Super+3 | dotool
     ydotool key 125:1 4:1 125:0 4:0
+    sleep 0.5
+    WINDOW=3
+  fi
+
+  echo "Bragi: $(date)"
+  # A for Encore
+  ydotool key 30:1 30:0
+  sleep 0.5
+}
+
+action_service() {
+  
+  if [[ (( "$WINDOW" -ne 4 )) ]]; then
+    echo "alt tab back to BS: $(date)"
+    #echo key Super+3 | dotool
+    ydotool key 125:1 5:1 125:0 5:0
     sleep 0.5
     WINDOW=3
   fi
@@ -104,14 +120,8 @@ if [[ $MODE == "BRAGI" ]]; then
 fi
 
 if [[ $MODE == "DUO" ]]; then
-  while true; do
-    action_bragi_new
+    action_bragi
     sleep 1.5
-    action_cancel_bragi
-    sleep 8
-    action_assasin_cross
+    action_service
     sleep 1.5
-    action_cancel_bragi
-    sleep 8
-  done
 fi
