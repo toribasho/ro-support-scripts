@@ -10,8 +10,8 @@ RERUN=false
 #RERUN=true
 
 WINDOW=3
-MODE="DUO"
-#MODE="BRAGI"
+# MODE="DUO"
+MODE="BRAGI"
 
 check_another_instances() {
   # Find processes matching the script name, excluding the current process
