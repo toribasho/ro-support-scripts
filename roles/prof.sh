@@ -48,6 +48,16 @@ action_prof() {
   ydotool click 0xC0;
   sleep 0.5
 
+  if [[ "$refollow" == true ]]; then
+    # move mouse to follow char
+    ydotool mousemove --absolute -x 255 -y 160
+    ydotool key 54:1
+    sleep 0.1
+    echo "right_click" > /tmp/vmouse_cmd
+    sleep 0.15
+    ydotool key 54:0
+  fi  
+
   if [[ "$cast_indulge" == "true" ]]; then
     for ((cast=0; cast<=num_cast_indulge; cast++));
     do 
@@ -57,15 +67,6 @@ action_prof() {
     done
   fi
 
-## DOESNT WORK
-  if [[ "$refollow" == true ]]; then
-    # move mouse to follow char
-    ydotool mousemove --absolute -x 255 -y 160
-    ydotool key 54:1
-    sleep 0.1
-    echo "right_click" > /tmp/vmouse_cmd
-    sleep 0.15
-    ydotool key 54:0
-  fi
+
 
 }
