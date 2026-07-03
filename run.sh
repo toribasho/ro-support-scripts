@@ -49,8 +49,10 @@ case "$main_role" in
     action_prof $junopie_prof_slot
     ;;  
   "all-about-killing")
-    action_bard 
-    action_link "ass" $killing_link_slot
+    action_bard
+    if [[ -n `check_for_role "linker"` ]]; then
+      action_link "ass" $killing_link_slot
+    fi
     action_prof $killing_prof_slot
     ;;
   "Torizavr")
