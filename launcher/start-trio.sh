@@ -157,7 +157,11 @@ launch_client() {
   if [[ "$NUM" == 1 || "$NUM" == 3 ]]; then
     sleep 4
     echo "Lest open friend list"
-    ydotool key 56:1 35:1 56:0 35:0
+    ydotool key 56:1 
+    sleep 0.1
+    ydotool key 35:1 
+    sleep 0.1
+    ydotool key 56:0 35:0
     sleep 0.3
   fi
 }

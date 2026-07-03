@@ -62,7 +62,9 @@ action_prof() {
     # move mouse to follow char
     ydotool mousemove --absolute -x 260 -y 170
     ydotool key 54:1
-    ydotool click 0xC1
+    sleep 0.1
+    echo "right_click" > /tmp/vmouse_cmd
+    sleep 0.1
     ydotool key 54:0
   fi
 
