@@ -53,7 +53,7 @@ case "$main_role" in
     if [[ -n `check_for_role "linker"` ]]; then
       action_link "ass" $killing_link_slot
     fi
-    action_prof $killing_prof_slot
+    action_prof $killing_prof_slot true 1 true
     ;;
   "Torizavr")
     action_bard 
