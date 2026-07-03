@@ -10,8 +10,9 @@ RERUN=false
 #RERUN=true
 
 WINDOW=3
-# MODE="DUO"
-MODE="BRAGI"
+#MODE="BS"
+MODE="DUO"
+#MODE="BRAGI"
 
 check_another_instances() {
   # Find processes matching the script name, excluding the current process
@@ -120,6 +121,19 @@ if [[ $MODE == "BRAGI" ]]; then
 fi
 
 if [[ $MODE == "DUO" ]]; then
+  while true; do
+    action_bragi_new
+    sleep 1.5
+    action_cancel_bragi
+    sleep 8
+    action_assasin_cross
+    sleep 1.5
+    action_cancel_bragi
+    sleep 8
+  done
+fi
+
+if [[ $MODE == "BS" ]]; then
   while true; do
     action_bragi
     sleep 0.5
