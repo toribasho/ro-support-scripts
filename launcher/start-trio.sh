@@ -90,6 +90,8 @@ launch_client() {
 
   # point
   local NUM=$1
+  local ROLE_NAME=$2
+
   echo $(( 215+30*(($NUM-1)) ))
   ydotool mousemove --absolute -x 600 -y $((215+29*($NUM-1))) 
   sleep 0.1
@@ -119,24 +121,27 @@ launch_client() {
   ydotool click 0xC0;
   sleep 0.1
 
-  if (( $NUM == 1 )); then
+  if [[ $ROLE_NAME == "Linker" ]]; then
     # Light
     ydotool key 38:1 38:0 23:1 23:0 34:1 34:0 28:1 28:0
-  elif (( $NUM == 2 )); then
+  elif [[ $ROLE_NAME == "Bragi" ]]; then
     # Clampsi
     ydotool key 46:1 46:0 38:1 38:0 30:1 30:0 28:1 28:0
-  elif (( $NUM == 3 )); then
+  elif [[ $ROLE_NAME == "Prof" ]]; then
     # Naoo
     ydotool key 49:1 49:0 30:1 30:0 24:1 24:0 28:1 28:0
-  elif (( $NUM == 4 )); then
+  elif [[ $ROLE_NAME == "Alcaster" ]]; then
     # Alcaster
     ydotool key 30:1 30:0 38:1 38:0 46:1 46:0 28:1 28:0
-  elif (( $NUM == 5 )); then
+  elif [[ $ROLE_NAME == "All-about-zeny" ]]; then
     # all-about-zeny
     ydotool key 44:1 44:0 18:1 18:0 49:1 49:0 28:1 28:0
-  elif (( $NUM == 6 )); then
-    # Kimichani
+  elif [[ $ROLE_NAME == "Kimichuri" ]]; then
+    # Kimichuri bard
     $(convertToYdotool "chur")
+  elif [[ $ROLE_NAME == "Dancer" ]]; then
+    # Dance-till-Midnight
+    $(convertToYdotool "till")  
   else
     echo "Unknown param! "$NUM
   fi
@@ -154,7 +159,7 @@ launch_client() {
   ydotool key 28:1 28:0
   sleep 1
 
-  if [[ "$NUM" == 1 || "$NUM" == 3 ]]; then
+  if [[ "$ROLE_NAME" == "Linker" || "$ROLE_NAME" == "Prof" ]]; then
     sleep 4
     echo "Lest open friend list"
     ydotool key 56:1 
@@ -181,23 +186,26 @@ fi
 for arg in "$@"; do
     case "$arg" in
         "Linker")
-            launch_client 1 
+            launch_client 1 $arg
             ;;
         "Bragi")
-            launch_client 2
+            launch_client 2 $arg
             ;;
         "Prof")
-            launch_client 3 
+            launch_client 3 $arg
             ;;
         "Alcaster")
-            launch_client 4 
+            launch_client 4 $arg
             ;;
         "All-about-zeny")
-            launch_client 5
+            launch_client 5 $arg
             ;;
         "Kimichuri")
-            launch_client 6
-            ;;                        
+            launch_client 4 $arg
+            ;;     
+        "Dancer")
+            launch_client 4 $arg
+            ;;                                 
         *)
             echo "Skipping unknown option: $arg"
             ;;
