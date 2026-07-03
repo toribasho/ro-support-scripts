@@ -2,6 +2,7 @@
 
 main_role=${1:-"none"}
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+#follow=true
 
 # --- Environment "Stealing" for SSH (Corrected Path) ---
 if [ -z "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
@@ -58,20 +59,19 @@ case "$main_role" in
     # action_prof $champ_prof_slot
     ;;        
   "HuntEmDown")
-    # local force=true
-    # if [[ -n `check_for_role "prof"` ]]; then
-    #   force=true
-    # fi        
-    # action_bard $force
-    # if [[ -n `check_for_role "dancer"` ]]; then
-    #   action_dancer $force
-    # fi
-    # if [[ -n `check_for_role "prof"` ]]; then
-    #   action_prof $hunt_prof_slot true 1
-    # fi    
-    action_bard
-    action_dancer
-    action_prof $hunt_prof_slot true 1 true
+    if [[ -n $follow && $follow == true ]]; then
+      local force=true   
+      action_bard $force
+      if [[ -n `check_for_role "dancer"` ]]; then
+        action_dancer $force
+      fi
+      if [[ -n `check_for_role "prof"` ]]; then
+        action_prof $hunt_prof_slot true 1 true
+      fi   
+    else
+      action_bard
+      action_prof $hunt_prof_slot true 1
+    fi
     ;;               
   "Zingal")
     action_bard 

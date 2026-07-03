@@ -145,6 +145,7 @@ launch_client() {
   else
     echo "Unknown param! "$NUM
   fi
+  sleep 0.5
   ydotool key 28:1 28:0
   sleep 5
 
