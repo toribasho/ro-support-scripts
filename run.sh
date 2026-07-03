@@ -70,7 +70,7 @@ case "$main_role" in
     #   action_prof $hunt_prof_slot true 1
     # fi    
     action_bard
-    action_service
+    action_dancer
     action_prof $hunt_prof_slot true 1 true
     ;;               
   "Zingal")
