@@ -89,6 +89,9 @@ case "$main_role" in
     action_bard 
     action_link "crus" $crus_link_slot
     action_prof $crus_prof_slot
+    ;;
+  "Marques")
+    action_prof $marques_prof_slot true 3
     ;;                      
   *) 
     echo "Unknown role"
