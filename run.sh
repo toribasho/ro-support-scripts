@@ -56,9 +56,16 @@ case "$main_role" in
     action_prof $killing_prof_slot true 1 true
     ;;
   "Torizavr")
-    action_bard 
-    action_prof $champ_prof_slot true 4
-    # action_prof $champ_prof_slot
+  use_indugle=false
+    if [[ -n `check_for_role "bard"` ]]; then
+      action_bard 
+      use_indugle=true
+    fi
+    if [[ $use_indugle == true ]];
+      action_prof $champ_prof_slot true 4
+    else
+      action_prof $champ_prof_slot
+    fi
     ;;        
   "HuntEmDown")
     if [[ -n $follow && $follow == true ]]; then
