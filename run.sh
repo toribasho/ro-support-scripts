@@ -61,7 +61,7 @@ case "$main_role" in
       action_bard 
       use_indugle=true
     fi
-    if [[ $use_indugle == true ]];
+    if [[ $use_indugle == true ]]; then
       action_prof $champ_prof_slot true 4
     else
       action_prof $champ_prof_slot
