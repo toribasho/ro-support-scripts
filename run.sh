@@ -56,10 +56,10 @@ case "$main_role" in
     action_prof $killing_prof_slot true 1 true
     ;;
   "Torizavr")
-  use_indugle=false
+  use_indugle=true
     if [[ -n `check_for_role "bard"` ]]; then
       action_bard 
-      use_indugle=true
+      use_indugle=false
     fi
     if [[ $use_indugle == true ]]; then
       action_prof $champ_prof_slot true 4
