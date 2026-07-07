@@ -62,7 +62,7 @@ case "$main_role" in
       use_indugle=false
     fi
     if [[ $use_indugle == true ]]; then
-      action_prof $champ_prof_slot true 4
+      action_prof $champ_prof_slot true 5
     else
       action_prof $champ_prof_slot
     fi
