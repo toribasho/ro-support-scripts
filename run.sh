@@ -78,7 +78,7 @@ case "$main_role" in
       if [[ -n `check_for_role "prof"` ]]; then
         action_prof $hunt_prof_slot true 1 true
       fi   
-    elif [[ -n $HuntWithService && HuntWithService == true ]]; then
+    elif [[ HuntWithService == true ]]; then
       action_prof $hunt_prof_slot false 1 true
     else
       action_bard
