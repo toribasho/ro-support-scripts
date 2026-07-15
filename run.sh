@@ -2,7 +2,8 @@
 
 main_role=${1:-"none"}
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
-follow=true
+# follow=true
+HuntWithService=true
 
 # --- Environment "Stealing" for SSH (Corrected Path) ---
 if [ -z "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
@@ -77,6 +78,8 @@ case "$main_role" in
       if [[ -n `check_for_role "prof"` ]]; then
         action_prof $hunt_prof_slot true 1 true
       fi   
+    elif [[ -n $HuntWithService && HuntWithService == true ]]; then
+      action_prof $hunt_prof_slot false 1 true
     else
       action_bard
       action_prof $hunt_prof_slot true 1
