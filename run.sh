@@ -69,6 +69,7 @@ case "$main_role" in
     fi
     ;;        
   "HuntEmDown")
+    echo 'FLAG IS: '$HuntWithService
     if [[ -n $follow && $follow == true ]]; then
       local force=true   
       action_bard $force
@@ -78,9 +79,9 @@ case "$main_role" in
       if [[ -n `check_for_role "prof"` ]]; then
         action_prof $hunt_prof_slot true 1 true
       fi   
-    elif [[ $HuntWithService == true ]]; then
+    elif [[ "$HuntWithService" == true ]]; then
+      echo 'GO FOLLOW'
       action_prof $hunt_prof_slot false 1 true
-      
     else
       action_bard
       action_prof $hunt_prof_slot true 1
