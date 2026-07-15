@@ -49,6 +49,7 @@ action_prof() {
   sleep 0.5
 
   if [[ "$refollow" == true ]]; then
+    sleep 1
     # move mouse to follow char
     ydotool mousemove --absolute -x 255 -y 160
     ydotool key 54:1
