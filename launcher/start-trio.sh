@@ -147,6 +147,8 @@ launch_client() {
   fi
   sleep 0.5
   ydotool key 28:1 28:0
+  sleep 0.5
+  ydotool key 28:1 28:0
   sleep 5
 
   ydotool click 0xC0
