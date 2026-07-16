@@ -104,7 +104,11 @@ case "$main_role" in
     ;;
   "Marques")
     action_prof $marques_prof_slot true 3
-    ;;                      
+    ;;    
+  "Dance-till-Midnight")
+    action_bard 
+    action_prof $dancer_prof_slot
+    ;;                        
   *) 
     echo "Unknown role"
     # action_bard 
