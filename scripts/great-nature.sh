@@ -34,6 +34,7 @@ while true; do
 
   action_enter
   # chose element:  [earth] water fire wind
+  
   action_enter
   action_enter
   # chose count: 10
