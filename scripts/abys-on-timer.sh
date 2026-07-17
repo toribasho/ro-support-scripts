@@ -13,6 +13,9 @@ WINDOW=3
 #MODE="DUO"
 MODE="BRAGI"
 
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+source "$SCRIPT_DIR/../Functions/global.sh"
+
 # --- Environment "Stealing" for SSH (Corrected Path) ---
 if [ -z "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
     # Define the runtime directory
@@ -144,6 +147,7 @@ if [[ $MODE == "BRAGI" ]]; then
     action_bragi
     #sleep ((60 + $random_double))
     #sleep ((60 + (random_range 1 2.5))
+    storeVar "abys-sleep-timer" (($(date +%s) + 50 ))
     sleep 60
     sleep random_range 3 4
   done
