@@ -14,7 +14,7 @@ WINDOW=3
 MODE="BRAGI"
 
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
-source "$SCRIPT_DIR/../Functions/global.sh"
+source "$SCRIPT_DIR/../functions/global.sh"
 
 # --- Environment "Stealing" for SSH (Corrected Path) ---
 if [ -z "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
