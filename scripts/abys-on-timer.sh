@@ -147,7 +147,7 @@ if [[ $MODE == "BRAGI" ]]; then
     action_bragi
     #sleep ((60 + $random_double))
     #sleep ((60 + (random_range 1 2.5))
-    storeVar "abys-sleep-timer" $($(date +%s) + 50 )
+    storeVar "abys-sleep-timer" ((date +%s) + 50 )
     sleep 60
     sleep random_range 3 4
   done
