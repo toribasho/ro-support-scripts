@@ -54,7 +54,7 @@ case "$main_role" in
     if [[ -n `check_for_role "linker"` ]]; then
       action_link "ass" $killing_link_slot
     fi
-    action_prof $killing_prof_slot true 1 true
+    action_prof $killing_prof_slot
     ;;
   "Torizavr")
   use_indugle=true
