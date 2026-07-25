@@ -108,7 +108,10 @@ case "$main_role" in
   "Dance-till-Midnight")
     action_bard 
     action_prof $dancer_prof_slot
-    ;;                        
+    ;;   
+  "Ushguli")
+    action_prof $temp_prof_slot
+    ;;                               
   *) 
     echo "Unknown role"
     # action_bard 
