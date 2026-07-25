@@ -110,6 +110,7 @@ case "$main_role" in
     action_prof $dancer_prof_slot
     ;;   
   "Ushguli")
+    action_bard
     action_prof $temp_prof_slot
     ;;                               
   *) 
