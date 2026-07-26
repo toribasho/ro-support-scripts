@@ -93,7 +93,7 @@ launch_client() {
   local ROLE_NAME=$2
 
   echo $(( 215+30*(($NUM-1)) ))
-  ydotool mousemove --absolute -x 585 -y $((215+29*($NUM-1))) 
+  ydotool mousemove --absolute -x 605 -y $((215+29*($NUM-1))) 
   sleep 0.1
   ydotool click 0xC0;
   sleep 0.1
