@@ -79,7 +79,7 @@ convertToYdotool() {
     done
 
     # Echo the final command string (trim trailing space)
-    echo "ydotool key ${sequence% }"
+    echo "ydotool key ${sequence% } -d 150"
 }
 
 #ydotool mousemove --absolute -x 600 -y 215 (+30)
@@ -123,19 +123,19 @@ launch_client() {
 
   if [[ $ROLE_NAME == "Linker" ]]; then
     # Light
-    ydotool key 38:1 38:0 23:1 23:0 34:1 34:0 28:1 28:0
+    ydotool key 38:1 38:0 23:1 23:0 34:1 34:0 28:1 28:0 -d 150
   elif [[ $ROLE_NAME == "Bragi" ]]; then
     # Clampsi
-    ydotool key 46:1 46:0 38:1 38:0 30:1 30:0 28:1 28:0
+    ydotool key 46:1 46:0 38:1 38:0 30:1 30:0 28:1 28:0 -d 150
   elif [[ $ROLE_NAME == "Prof" ]]; then
     # Naoo
-    ydotool key 49:1 49:0 30:1 30:0 24:1 24:0 28:1 28:0
+    ydotool key 49:1 49:0 30:1 30:0 24:1 24:0 28:1 28:0 -d 150
   elif [[ $ROLE_NAME == "Alcaster" ]]; then
     # Alcaster
-    ydotool key 30:1 30:0 38:1 38:0 46:1 46:0 28:1 28:0
+    ydotool key 30:1 30:0 38:1 38:0 46:1 46:0 28:1 28:0 -d 150
   elif [[ $ROLE_NAME == "All-about-zeny" ]]; then
     # all-about-zeny
-    ydotool key 44:1 44:0 18:1 18:0 49:1 49:0 28:1 28:0
+    ydotool key 44:1 44:0 18:1 18:0 49:1 49:0 28:1 28:0 -d 150
   elif [[ $ROLE_NAME == "Kimichuri" ]]; then
     # Kimichuri bard
     $(convertToYdotool "chur")
