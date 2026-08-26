@@ -95,7 +95,7 @@ launch_client() {
   echo $(( 215+30*(($NUM-1)) ))
   ydotool mousemove --absolute -x 605 -y $((215+29*($NUM-1))) 
   sleep 0.1
-  ydotool click 0xC0;
+  ydotool click 0xC0 -D 100
   sleep 0.1
 
   # switch to workspace
@@ -112,13 +112,13 @@ launch_client() {
   # point to login btn
   ydotool mousemove --absolute -x 305 -y 165
   sleep 0.1
-  ydotool click 0xC0;
+  ydotool click 0xC0 -D 100
   sleep 2
 
   # point to filter char list
   ydotool mousemove --absolute -x 305 -y 223
   # click
-  ydotool click 0xC0;
+  ydotool click 0xC0 -D 100
   sleep 0.1
 
   if [[ $ROLE_NAME == "Linker" ]]; then
@@ -151,7 +151,7 @@ launch_client() {
   ydotool key 28:1 28:0
   sleep 5
 
-  ydotool click 0xC0
+  ydotool click 0xC0 -D 100
   sleep 0.2
 
   ydotool key 28:1 28:0
