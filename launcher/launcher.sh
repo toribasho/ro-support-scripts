@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Configuration
-options=("Trio" "Linker" "Bragi" "Prof" "Dancer" "Alcaster" "All-about-zeny" "Kimichuri" )
+options=("Trio" "Linker" "Bragi" "Prof" "Dancer" "Alcaster" "All-about-zeny" "Kimichuri" "Shekvitelli" )
 selected=("Trio")
 
 host=$(cat /etc/hostname)
