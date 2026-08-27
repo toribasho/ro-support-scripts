@@ -9,6 +9,9 @@ SKILL_DELAY=0.3
 RERUN=false
 #RERUN=true
 
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+source "$SCRIPT_DIR/../functions/global.sh"
+
 # --- Environment "Stealing" for SSH (Corrected Path) ---
 if [ -z "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
     # Define the runtime directory
@@ -168,6 +171,8 @@ if [[ $MODE == "BS" ]]; then
     action_cancel_service
     sleep 0.5
     action_service
+    song_duration=$(($(date +%s) + 165 ))
+    storeVar "songs-sleep-timer" $song_duration
     sleep 180
   done
 fi
