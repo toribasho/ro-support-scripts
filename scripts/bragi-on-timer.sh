@@ -10,8 +10,8 @@ RERUN=false
 #RERUN=true
 
 WINDOW=3
-#MODE="BS"
-MODE="DUO"
+MODE="BS"
+#MODE="DUO"
 #MODE="BRAGI"
 
 check_another_instances() {
@@ -48,18 +48,33 @@ action_bragi() {
 
 action_service() {
   
-  if [[ (( "$WINDOW" -ne 4 )) ]]; then
+  if [[ (( "$WINDOW" -ne 5 )) ]]; then
     echo "alt tab back to BS: $(date)"
-    #echo key Super+3 | dotool
-    ydotool key 125:1 5:1 125:0 5:0
+    ydotool key 125:1 6:1 125:0 6:0
     sleep 0.5
-    WINDOW=3
+    WINDOW=5
   fi
 
-  echo "Bragi: $(date)"
+  echo "Service: $(date)"
   # A for Encore
   ydotool key 30:1 30:0
   sleep 0.5
+}
+
+action_cancel_service() {
+
+  if [[ (( "$WINDOW" -ne 5 )) ]]; then
+    echo "alt tab back to BS: $(date)"
+    ydotool key 125:1 6:1 125:0 6:0
+    sleep 0.5
+    WINDOW=5
+  fi
+
+  # swap wep for cancel Z-X
+  ydotool key 44:1 44:0
+  sleep 0.5
+  ydotool key 45:1 45:0
+  sleep 0.3
 }
 
 
@@ -73,7 +88,7 @@ action_assasin_cross() {
     WINDOW=3
   fi
 
-  echo "Bragi: $(date)"
+  echo "Ass cross: $(date)"
   # E for Assassin-cross
   ydotool key 18:1 18:0
   sleep 0.5
@@ -89,7 +104,7 @@ action_bragi_new() {
     WINDOW=3
   fi
 
-  echo "Bragi: $(date)"
+  echo "Bragi fresh: $(date)"
   # W for bragi
   ydotool key 17:1 17:0
   sleep 0.5
@@ -135,7 +150,11 @@ fi
 
 if [[ $MODE == "BS" ]]; then
   while true; do
+    action_cancel_bragi
+    sleep 0.5
     action_bragi
+    sleep 0.5
+    action_cancel_service
     sleep 0.5
     action_service
     sleep 180
