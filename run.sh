@@ -2,7 +2,7 @@
 
 main_role=${1:-"none"}
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
-# follow=true
+follow=true
 #HuntWithService=true
 
 # --- Environment "Stealing" for SSH (Corrected Path) ---
@@ -71,14 +71,12 @@ case "$main_role" in
   "HuntEmDown")
     echo 'FLAG IS: '$HuntWithService
     if [[ -n $follow && $follow == true ]]; then
-      local force=true   
-      action_bard $force
-      if [[ -n `check_for_role "dancer"` ]]; then
-        action_dancer $force
-      fi
-      if [[ -n `check_for_role "prof"` ]]; then
-        action_prof $hunt_prof_slot true 1 true
-      fi   
+      # local force=true   
+      # action_bard $force
+      # if [[ -n `check_for_role "dancer"` ]]; then
+      #   action_dancer $force
+      # fi
+      action_prof $hunt_prof_slot true 1 true
     elif [[ "$HuntWithService" == true ]]; then
       echo 'GO FOLLOW'
       action_prof $hunt_prof_slot false 1 true
