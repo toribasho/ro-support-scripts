@@ -165,11 +165,11 @@ fi
 if [[ $MODE == "BS" ]]; then
   while true; do
     action_cancel_bragi
-    sleep 0.5
+    sleep 0.1
     action_bragi
-    sleep 0.5
+    sleep 0.1
     action_cancel_service
-    sleep 0.5
+    sleep 0.1
     action_service
     song_duration=$(($(date +%s) + 165 ))
     storeVar "songs-sleep-timer" $song_duration
