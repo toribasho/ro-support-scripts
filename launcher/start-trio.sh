@@ -9,6 +9,9 @@ if [ -z "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
     # Find the signature in the user-specific runtime path
     # We look for the directory that isn't 'hyprctl'
     export HYPRLAND_INSTANCE_SIGNATURE=$(ls "$XDG_RUNTIME_DIR/hypr" | grep -v "hyprctl" | head -n 1)
+
+    # For grim ( get pixel color ) i need to export WAYLAND_DISPALY
+    export WAYLAND_DISPLAY="wayland-1"
 fi
 
 # 1. Check if locked
@@ -80,6 +83,39 @@ convertToYdotool() {
 
     # Echo the final command string (trim trailing space)
     echo "ydotool key ${sequence% } -d 150"
+}
+
+openFriendList() {
+  local X=822
+  local Y=593
+  local RGB_VALUES=$(grim -g "${X},${Y} 1x1" -t png - | magick - -format '%[fx:int(255*r)] %[fx:int(255*g)] %[fx:int(255*b)]' info:-)
+  
+  local TARGET_R=156
+  local TARGET_G=181
+  local TARGET_B=231
+
+  local FriendList_Opened=false
+
+  read R G B <<< "$RGB_VALUES"
+
+  # Check if values exist (prevent errors if grim fails)
+  if [[ -n "$R" && -n "$G" && -n "$B" ]]; then
+      # Compare values
+      if (( R == TARGET_R && G == TARGET_G && B == TARGET_B )); then
+          echo "GOTCHA!"
+          FriendList_Opened=true
+      fi
+  fi
+
+  if [[ ! $FriendList_Opened ]]; then
+    echo "Lest open friend list"
+    ydotool key 56:1 
+    sleep 0.1
+    ydotool key 35:1 
+    sleep 0.1
+    ydotool key 56:0 35:0
+    sleep 0.3
+  fi    
 }
 
 #ydotool mousemove --absolute -x 600 -y 215 (+30)
@@ -167,13 +203,7 @@ launch_client() {
 
   if [[ "$ROLE_NAME" == "Linker" || "$ROLE_NAME" == "Prof" ]]; then
     sleep 4
-    echo "Lest open friend list"
-    ydotool key 56:1 
-    sleep 0.1
-    ydotool key 35:1 
-    sleep 0.1
-    ydotool key 56:0 35:0
-    sleep 0.3
+    openFriendList
   fi
 }
 
