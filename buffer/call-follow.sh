@@ -1,0 +1,1 @@
+ssh tiny-arch ~/Games/ro-support-bot/scripts/make-follow.sh
