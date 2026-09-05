@@ -98,6 +98,10 @@ case "$main_role" in
   "Futabuki")
     action_bard 
     action_link "crus" $crus_link_slot
+    if [[ -n `check_for_role "ms"` ]]; then
+      action_link "ms" $ms_link_slot
+      action_bs true false false true
+    fi    
     action_prof $crus_prof_slot
     ;;
   "Marques")
