@@ -57,16 +57,17 @@ case "$main_role" in
     action_prof $killing_prof_slot
     ;;
   "Torizavr")
-  use_indugle=true
-    if [[ -n `check_for_role "bard"` ]]; then
-      action_bard 
-      use_indugle=false
-    fi
-    if [[ $use_indugle == true ]]; then
-      action_prof $champ_prof_slot true 5
-    else
-      action_prof $champ_prof_slot
-    fi
+    # use_indugle=true
+    # if [[ -n `check_for_role "bard"` ]]; then
+    #   action_bard 
+    #   use_indugle=false
+    # fi
+    # if [[ $use_indugle == true ]]; then
+    #   action_prof $champ_prof_slot true 5
+    # else
+    #   action_prof $champ_prof_slot
+    # fi
+    action_prof $champ_prof_slot true 4
     ;;        
   "HuntEmDown")
     echo 'FLAG IS: '$HuntWithService
