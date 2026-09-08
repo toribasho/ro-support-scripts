@@ -67,7 +67,7 @@ case "$main_role" in
     # else
     #   action_prof $champ_prof_slot
     # fi
-    action_prof $champ_prof_slot true 4
+    action_prof $champ_prof_slot true 5
     ;;        
   "HuntEmDown")
     echo 'FLAG IS: '$HuntWithService
