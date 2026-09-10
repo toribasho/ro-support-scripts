@@ -1,0 +1,1 @@
+ssh tiny-arch ~/Games/ro-support-bot/scripts/fortune-mayor.sh fortune-only

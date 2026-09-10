@@ -36,6 +36,8 @@ check_another_instances() {
   fi
 }
 
+RUN_ARG=${1:-"ALL"}
+
 check_another_instances
 
 action_cancel_service() {
@@ -76,12 +78,20 @@ action_dancer_fortune() {
     echo "alt tab back to DNC: $(date)"
     ydotool key 125:1 6:1 125:0 6:0
     sleep 0.5
-    WINDOW=3
+    WINDOW=5
   fi
 
   echo "Fortune's kiss: $(date)"
   # E for Fortune's kiss
   ydotool key 18:1 18:0
+  sleep 0.5
+}
+
+action_service_new() {
+  echo "service: $(date)"
+
+  # W for service
+  ydotool key 17:1 17:0
   sleep 0.5
 }
 
@@ -91,7 +101,7 @@ action_dancer_battle_drums() {
     echo "alt tab back to DNC: $(date)"
     ydotool key 125:1 6:1 125:0 6:0
     sleep 0.5
-    WINDOW=3
+    WINDOW=5
   fi
 
   echo "Battledrum: $(date)"
@@ -100,10 +110,20 @@ action_dancer_battle_drums() {
   sleep 0.5
 }
 
-action_cancel_bragi
-sleep 0.1
-action_cancel_service
-sleep 0.1
-action_dancer_fortune
-sleep 0.5
-action_dancer_battle_drums
+if [[ $RUN_ARG == "ALL" ]]; then
+  action_cancel_bragi
+  sleep 0.1
+  action_cancel_service
+  sleep 0.1
+  action_dancer_fortune
+  sleep 0.5
+  action_dancer_battle_drums
+else
+  action_cancel_service
+  sleep 0.1
+  action_dancer_fortune
+  sleep 0.5
+  action_cancel_service
+  sleep 0.1
+  action_service_new
+fi
