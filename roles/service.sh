@@ -10,7 +10,7 @@ action_service() {
   
   # A for Encore
   ydotool key 30:1 30:0
-  sleep 0.5
+  sleep 0.1
 }
 
 action_service_new() {
@@ -18,7 +18,7 @@ action_service_new() {
 
   # W for service
   ydotool key 17:1 17:0
-  sleep 0.5
+  sleep 0.1
 }
 
 action_cancel_service() {
@@ -26,7 +26,7 @@ action_cancel_service() {
   ydotool key 44:1 44:0
   sleep 0.3
   ydotool key 45:1 45:0
-  sleep 0.3
+  sleep 0.1
 }
 
 action_dancer() {

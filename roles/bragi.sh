@@ -10,7 +10,7 @@ action_bragi() {
   
   # A for Encore
   ydotool key 30:1 30:0
-  sleep 0.5
+  sleep 0.1
 }
 
 action_bragi_new() {
@@ -18,7 +18,7 @@ action_bragi_new() {
 
   # W for bragi
   ydotool key 17:1 17:0
-  sleep 0.5
+  sleep 0.1
 }
 
 action_cancel_bragi() {
