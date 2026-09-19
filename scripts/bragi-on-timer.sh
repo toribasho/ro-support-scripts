@@ -25,9 +25,10 @@ fi
 
 
 WINDOW=`hyprctl activeworkspace -j | jq '.id'`
-MODE="BS"
+# MODE="BS"
 #MODE="DUO"
 #MODE="BRAGI"
+MODE="FULL-BRAGI"
 
 check_another_instances() {
   # Find processes matching the script name, excluding the current process
@@ -171,6 +172,18 @@ if [[ $MODE == "BS" ]]; then
     action_cancel_service
     sleep 0.1
     action_service
+    song_duration=$(($(date +%s) + 165 ))
+    storeVar "songs-sleep-timer" $song_duration
+    sleep 180
+  done
+fi
+
+
+if [[ $MODE == "FULL-BRAGI" ]]; then
+  while true; do
+    action_cancel_bragi
+    sleep 0.1
+    action_bragi
     song_duration=$(($(date +%s) + 165 ))
     storeVar "songs-sleep-timer" $song_duration
     sleep 180
