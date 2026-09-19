@@ -25,10 +25,10 @@ fi
 
 
 WINDOW=`hyprctl activeworkspace -j | jq '.id'`
-# MODE="BS"
 #MODE="DUO"
 #MODE="BRAGI"
-MODE="FULL-BRAGI"
+MODE="BS"
+# MODE="FULL-BRAGI"
 
 check_another_instances() {
   # Find processes matching the script name, excluding the current process
