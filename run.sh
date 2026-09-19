@@ -115,7 +115,10 @@ case "$main_role" in
   "Ushguli")
     action_bard
     action_prof $temp_prof_slot
-    ;;                               
+    ;;     
+  "Ultimaniac")
+    action_prof $wiz_prof_slot true 2
+    ;;                                    
   *) 
     echo "Unknown role"
     # action_bard 

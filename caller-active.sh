@@ -2,7 +2,7 @@
 
 # --- Configuration ---
 # Define your predefined list of valid names here (space-separated)
-PREDEFINED_ROLES=("all-about-zeny" "Toribash" "Junopie" "all-about-killing" "Torizavr" "HuntEmDown" "fear-no-more" "Futabuki" "Dance-till-Midnight" "Ushguli")
+PREDEFINED_ROLES=("all-about-zeny" "Toribash" "Junopie" "all-about-killing" "Torizavr" "HuntEmDown" "fear-no-more" "Futabuki" "Dance-till-Midnight" "Ushguli" "Ultimaniac")
 STATE_FILE="/tmp/last_main_role.txt"
 
 # --- Step 0: Load previously called main_role ---
