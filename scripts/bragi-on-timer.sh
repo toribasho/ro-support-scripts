@@ -24,7 +24,7 @@ if [ -z "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
 fi
 
 
-WINDOW=`hyprctl activeworkspace -j | jq '.id'`
+WINDOW=$(hyprctl activeworkspace -j | jq '.id')
 #MODE="DUO"
 #MODE="BRAGI"
 # MODE="BS"
