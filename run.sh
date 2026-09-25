@@ -78,7 +78,7 @@ case "$main_role" in
       #   action_dancer $force
       # fi
       action_prof $hunt_prof_slot true 1 true
-    elif [[ "$HuntWithService" == true ]]; then
+    elif [[ $HuntWithService == true ]]; then
       echo 'GO FOLLOW'
       action_prof $hunt_prof_slot false 1 true
     else
