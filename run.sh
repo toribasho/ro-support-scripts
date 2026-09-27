@@ -72,16 +72,9 @@ case "$main_role" in
     ;;        
   "HuntEmDown")
     echo 'FLAG IS: '$HuntWithService
-    if [[ -n $follow && $follow == true ]]; then
-      # local force=true   
-      # action_bard $force
-      # if [[ -n `check_for_role "dancer"` ]]; then
-      #   action_dancer $force
-      # fi
-      action_prof $hunt_prof_slot true 1 true
-    elif [[ $HuntWithService == "true" ]]; then
+    if [[ $HuntWithService == "true" ]]; then
       echo 'GO FOLLOW'
-      action_prof $hunt_prof_slot false 1 true
+      action_prof $hunt_prof_slot true 1 true
     else
       action_bard
       action_prof $hunt_prof_slot true 1
