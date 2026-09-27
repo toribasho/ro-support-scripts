@@ -3,7 +3,8 @@
 main_role=${1:-"none"}
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
 # follow=true
-HuntWithService=false
+# HuntWithService=false
+HuntWithService=true
 
 # --- Environment "Stealing" for SSH (Corrected Path) ---
 if [ -z "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
