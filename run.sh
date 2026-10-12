@@ -91,13 +91,19 @@ case "$main_role" in
     action_prof 8 true 1
     ;;            
   "Futabuki")
-    action_bard 
-    action_link "crus" $crus_link_slot
-    if [[ -n `check_for_role "ms"` ]]; then
-      action_link "ms" $ms_link_slot
-      action_bs true false false true
-    fi    
-    action_prof $crus_prof_slot
+    echo 'FLAG IS: '$HuntWithService
+    if [[ $HuntWithService == "true" ]]; then
+      echo 'GO FOLLOW'
+      action_prof $crus_prof_slot true 1 true
+    else
+      action_bard 
+      action_link "crus" $crus_link_slot
+      if [[ -n `check_for_role "ms"` ]]; then
+        action_link "ms" $ms_link_slot
+        action_bs true false false true
+      fi    
+      action_prof $crus_prof_slot
+    fi
     ;;
   "Marques")
     action_prof $marques_prof_slot true 3

@@ -1,2 +1,2 @@
 # ssh tiny-arch ~/Games/ro-support-bot/scripts/fortune-mayor.sh fortune-only
-ssh tiny-arch ~/Games/ro-support-bot/scripts/fortune-mayor.sh ALL
+ssh tiny-arch ~/Games/ro-support-bot/scripts/fortune-mayor.sh

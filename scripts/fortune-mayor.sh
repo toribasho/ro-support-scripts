@@ -37,6 +37,7 @@ check_another_instances() {
 }
 
 RUN_ARG=${1:-"ALL"}
+WINDOW=$(hyprctl activeworkspace -j | jq '.id')
 
 check_another_instances
 
