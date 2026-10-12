@@ -117,9 +117,12 @@ if [[ $RUN_ARG == "ALL" ]]; then
   sleep 0.1
   action_dancer_fortune
   sleep 0.5
-  action_cancel_service
-  sleep 0.1
   action_dancer_battle_drums
+  sleep 15
+  # action_cancel_bragi
+  # sleep 0.1
+  # action_service_new
+  # sleep 0.1  
 else
   action_cancel_service
   sleep 0.1
