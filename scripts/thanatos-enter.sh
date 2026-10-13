@@ -20,7 +20,7 @@ npc_talk() {
     ydotool mousemove --absolute -x 355 -y 140
     sleep 0.1
     echo "right_click" > /tmp/vmouse_cmd
-    sleep 0.3
+    sleep 1
     ydotool key 28:1 28:0
     sleep 0.3
 
