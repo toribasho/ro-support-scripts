@@ -52,19 +52,19 @@ npc_talk() {
 }
 
 # win 3
-if [[ (( "$WINDOW" -ne 3 )) ]]; then
-    echo "alt tab back to BS: $(date)"
-    #echo key Super+3 | dotool
-    ydotool key 125:1 4:1 125:0 4:0
-    sleep 0.5
-    WINDOW=3
-fi
-npc_talk
+# if [[ (( "$WINDOW" -ne 3 )) ]]; then
+#     echo "alt tab back to BS: $(date)"
+#     #echo key Super+3 | dotool
+#     ydotool key 125:1 4:1 125:0 4:0
+#     sleep 0.5
+#     WINDOW=3
+# fi
+# npc_talk
 
-#win 4
-ydotool key 125:1 5:1 125:0 5:0
-npc_talk
+# #win 4
+# ydotool key 125:1 5:1 125:0 5:0
+# npc_talk
 
-#win 5
-ydotool key 125:1 6:1 125:0 6:0
+# #win 5
+# ydotool key 125:1 6:1 125:0 6:0
 npc_talk
