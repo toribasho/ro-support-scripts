@@ -55,8 +55,10 @@ npc_talk
 
 #win 4
 ydotool key 125:1 5:1 125:0 5:0
+sleep 0.5
 npc_talk
 
 #win 5
 ydotool key 125:1 6:1 125:0 6:0
+sleep 0.5
 npc_talk
