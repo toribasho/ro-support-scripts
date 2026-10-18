@@ -8,7 +8,7 @@ const CACHE_FILE = `${homeDir}/.cache/start-trio-selection`;
 export const PRESETS: Record<string, string[]> = {
     "Trio": ["Linker", "Bragi", "Prof"],
     "Thana": ["Bragi", "Prof", "Dancer"],
-    "LinkBS": ["Linker", "Minadze"],
+    "LinkBS": ["Shekvitelli", "Minadze"],
 };
 
 export const ACCOUNTS: string[] = [
