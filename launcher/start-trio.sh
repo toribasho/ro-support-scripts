@@ -181,6 +181,9 @@ launch_client() {
   elif [[ $ROLE_NAME == "Shekvitelli" ]]; then
     # Shekvitelli - second linker
     $(convertToYdotool "shek")  
+  elif [[ $ROLE_NAME == "Minadze" ]]; then
+    # Shekvitelli - second linker
+    $(convertToYdotool "mina")  
   else
     echo "Unknown param! "$NUM
   fi
@@ -195,6 +198,8 @@ launch_client() {
 
   ydotool key 28:1 28:0
   sleep 1
+  ydotool click 0xC0 -D 100
+  sleep 0.2
   ydotool key 28:1 28:0
   sleep 1
   # select char
@@ -215,6 +220,25 @@ if [[ " $@ " =~ " Trio " ]]; then
   launch_client 2 "Bragi"
   sleep 1
   launch_client 3 "Prof"
+  exit 0
+fi
+
+if [[ " $@ " =~ " ProfWithSongs " ]]; then
+  echo "All services selected."
+  launch_client 2 "Bragi"
+  sleep 1
+  launch_client 3 "Prof"
+  sleep 1  
+  launch_client 4 "Dancer"
+  exit 0
+fi
+
+
+if [[ " $@ " =~ " LinkBS " ]]; then
+  echo "All services selected."
+  launch_client 1 "Shekvitelli"
+  sleep 1
+  launch_client 4 "Minadze"
   exit 0
 fi
 
@@ -245,6 +269,9 @@ for arg in "$@"; do
         "Shekvitelli")
             launch_client 1 $arg
             ;;
+        "Minadze")
+            launch_client 5 $arg
+            ;;            
         *)
             echo "Skipping unknown option: $arg"
             ;;
