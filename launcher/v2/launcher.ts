@@ -74,54 +74,50 @@ export function toggleSelection(item: string, isPreset: boolean) {
 export function launchGame(windowInstance?: any) {
     const selected = selectedState.value;
 
-    console.log("================ DEBUG INFO ================");
-    console.log("[1] Raw selected state:", selected);
-
-    writeFile(CACHE_FILE, selected.join('\n') );
+    writeFile(CACHE_FILE, selected.join('\n'));
 
     const finalAccounts = new Set<string>();
     selected.forEach(item => {
         if (PRESETS[item]) {
-            console.log(`[2] Unpacking preset '${item}':`, PRESETS[item]);
             PRESETS[item].forEach(acc => finalAccounts.add(acc));
         } else {
-            console.log(`[2] Adding individual account:`, item);
             finalAccounts.add(item);
         }
     });
 
     const launchArgs = Array.from(finalAccounts).join(' ');
-    console.log("[3] Final launchArgs string:", `"${launchArgs}"`);
 
     let hostname = '';
     try {
         hostname = readFile('/etc/hostname').trim();
-    } catch (e) {
-        console.error("[4] Error reading /etc/hostname:", e);
-    }
-    console.log("[4] Detected hostname:", `"${hostname}"`);
+    } catch (_) {}
+
+    // Ensure WAYLAND_DISPLAY and DISPLAY are passed so remote GUI/automation tools work
+    const envPrefix = 'WAYLAND_DISPLAY=wayland-1 DISPLAY=:0';
+    const logPath = `${homeDir}/.cache/start-trio.log`;
 
     let targetCommand = "";
     if (hostname === "arch-legion") {
-        targetCommand = `ssh tiny-arch "~/Games/launcher/start-trio.sh ${launchArgs}"`;
+        // Log on tiny-arch directly inside ~/.cache/start-trio.log
+        targetCommand = `ssh tiny-arch "${envPrefix} ~/Games/launcher/start-trio.sh ${launchArgs} > ~/.cache/start-trio.log 2>&1"`;
     } else if (hostname === "tiny-arch") {
-        targetCommand = `${homeDir}/Games/launcher/start-trio.sh ${launchArgs}`;
-    } else {
-        console.warn("[5] WARNING: Hostname matched neither 'arch-legion' nor 'tiny-arch'!");
+        targetCommand = `${envPrefix} ${homeDir}/Games/launcher/start-trio.sh ${launchArgs} > ${logPath} 2>&1`;
     }
 
-    console.log("[5] Executing command:", targetCommand);
-    console.log("============================================");
-    
-    if (targetCommand) {
-        execAsync(targetCommand);
-    }
+    console.log(`[DEBUG] Executing: ${targetCommand}`);
 
-    // if (hostname === "arch-legion") {
-    //     execAsync(`ssh tiny-arch "~/Games/launcher/start-trio.sh ${launchArgs}"`);
-    // } else if (hostname === "tiny-arch") {
-    //     execAsync(`${homeDir}/Games/launcher/start-trio.sh ${launchArgs}`);
-    // }
+    // execAsync callback captures stdout/stderr returned by SSH
+    execAsync(targetCommand)
+        .then(output => {
+            console.log("================ SSH STDOUT ================");
+            console.log(output || "(No stdout returned)");
+            console.log("============================================");
+        })
+        .catch(err => {
+            console.error("================ SSH STDERR / ERROR ================");
+            console.error(err);
+            console.error("====================================================");
+        });
 
     if (windowInstance) {
         windowInstance.destroy();
