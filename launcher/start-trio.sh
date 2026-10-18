@@ -223,7 +223,7 @@ if [[ " $@ " =~ " Trio " ]]; then
   exit 0
 fi
 
-if [[ " $@ " =~ " ProfWithSongs " ]]; then
+if [[ " $@ " =~ " Thana " ]]; then
   echo "All services selected."
   launch_client 2 "Bragi"
   sleep 1
@@ -232,7 +232,6 @@ if [[ " $@ " =~ " ProfWithSongs " ]]; then
   launch_client 4 "Dancer"
   exit 0
 fi
-
 
 if [[ " $@ " =~ " LinkBS " ]]; then
   echo "All services selected."

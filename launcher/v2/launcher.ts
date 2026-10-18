@@ -7,7 +7,7 @@ const CACHE_FILE = `${homeDir}/.cache/start-trio-selection`;
 
 export const PRESETS: Record<string, string[]> = {
     "Trio": ["Linker", "Bragi", "Prof"],
-    "ProfWithSongs": ["Bragi", "Prof", "Dancer"],
+    "Thana": ["Bragi", "Prof", "Dancer"],
     "LinkBS": ["Linker", "Minadze"],
 };
 
@@ -74,7 +74,7 @@ export function toggleSelection(item: string, isPreset: boolean) {
 export function launchGame(windowInstance?: any) {
     const selected = selectedState.value;
 
-    writeFile(selected.join('\n'), CACHE_FILE);
+    writeFile(CACHE_FILE, selected.join('\n') );
 
     const finalAccounts = new Set<string>();
     selected.forEach(item => {
@@ -93,6 +93,7 @@ export function launchGame(windowInstance?: any) {
     } catch (_) {}
 
     if (hostname === "arch-legion") {
+        execAsync(`echo  ${launchArgs}`)
         execAsync(`ssh tiny-arch "~/Games/launcher/start-trio.sh ${launchArgs}"`);
     } else if (hostname === "tiny-arch") {
         execAsync(`${homeDir}/Games/launcher/start-trio.sh ${launchArgs}`);
