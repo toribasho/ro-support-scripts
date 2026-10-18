@@ -18,7 +18,11 @@ export const ACCOUNTS: string[] = [
 function loadSelection(): string[] {
     try {
         const content = readFile(CACHE_FILE).trim();
-        if (content) return content.split('\n').filter(Boolean);
+        if (content) {
+            // Restore only lines that match defined PRESETS
+            const savedPresets = content.split('\n').filter(p => p in PRESETS);
+            if (savedPresets.length > 0) return savedPresets;
+        }
     } catch (_) {
         // Default if no cache exists
     }
@@ -74,7 +78,8 @@ export function toggleSelection(item: string, isPreset: boolean) {
 export function launchGame(windowInstance?: any) {
     const selected = selectedState.value;
 
-    writeFile(CACHE_FILE, selected.join('\n'));
+    const savedPresets = selected.filter(item => item in PRESETS);
+    writeFile(CACHE_FILE, savedPresets.join('\n'));
 
     const finalAccounts = new Set<string>();
     selected.forEach(item => {
