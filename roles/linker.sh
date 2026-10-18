@@ -103,7 +103,11 @@ action_link() {
 
   local WINDOW=`hyprctl activeworkspace -j | jq '.id'`
   local LINK_WINDOW=`hyprctl clients -j | jq -r '.[] | select(.class == "steam_proton") | select(.title | test("Light-the-Star")) | .workspace.id'`
-  
+
+  if [[ -z "$LINK_WINDOW" ]]; then
+    LINK_WINDOW=`hyprctl clients -j | jq -r '.[] | select(.class == "steam_proton") | select(.title | test("Shekvitelli")) | .workspace.id'`
+  fi
+
   if [[ -z "$LINK_WINDOW" ]]; then
     echo "Looks like no linker running. Skipping role"
     return -1

@@ -42,6 +42,10 @@ action_bs() {
   local BS_WINDOW=`hyprctl clients -j | jq -r '.[] | select(.class == "steam_proton") | select(.title | test("all-about-zeny")) | .workspace.id'`
 
   if [[ -z "$BS_WINDOW" ]]; then
+    BS_WINDOW=`hyprctl clients -j | jq -r '.[] | select(.class == "steam_proton") | select(.title | test("Minadze")) | .workspace.id'`
+  fi
+
+  if [[ -z "$BS_WINDOW" ]]; then
     echo "Looks like no bragi running. Skipping role"
     return -1
   fi

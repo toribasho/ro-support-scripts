@@ -44,6 +44,10 @@ case "$main_role" in
       action_link "ms" $ms_link_slot
       action_bs true false false true
     fi
+    if [[ -n `check_for_role "bs"` ]]; then
+      action_link "ms" $bs_link_slot
+      action_bs true false false true
+    fi    
     ;;
   "Junopie")
     action_bard 
