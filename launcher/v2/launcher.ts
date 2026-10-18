@@ -1,9 +1,9 @@
-import App from 'resource:///com/github/Aylurs/ags/app.js';
-import Utils from 'resource:///com/github/Aylurs/ags/utils.js';
-import Variable from 'resource:///com/github/Aylurs/ags/variable.js';
+import GLib from "gi://GLib";
+import { execAsync } from "ags/process";
+import { readFile, writeFile } from "ags/file";
 
-// Configuration
-const CACHE_FILE = `${Utils.HOME}/.cache/start-trio-selection`;
+const homeDir = GLib.get_home_dir();
+const CACHE_FILE = `${homeDir}/.cache/start-trio-selection`;
 
 export const PRESETS: Record<string, string[]> = {
     "Trio": ["Linker", "Bragi", "Prof"],
@@ -15,32 +15,51 @@ export const ACCOUNTS: string[] = [
     "Linker", "Bragi", "Prof", "Dancer", "Alcaster", "Kimichuri"
 ];
 
-// Load initial selection from cache file or default to ["Trio"]
 function loadSelection(): string[] {
     try {
-        if (Utils.readFile(CACHE_FILE).trim()) {
-            return Utils.readFile(CACHE_FILE).trim().split('\n').filter(Boolean);
-        }
+        const content = readFile(CACHE_FILE).trim();
+        if (content) return content.split('\n').filter(Boolean);
     } catch (_) {
-        // Cache file does not exist yet
+        // Default if no cache exists
     }
     return ["Trio"];
 }
 
-export const selectedState = Variable<string[]>(loadSelection());
+class State<T> {
+    private _value: T;
+    private _listeners: Array<(val: T) => void> = [];
+
+    constructor(initial: T) {
+        this._value = initial;
+    }
+
+    get value(): T {
+        return this._value;
+    }
+
+    set value(val: T) {
+        this._value = val;
+        this._listeners.forEach(cb => cb(val));
+    }
+
+    subscribe(cb: (val: T) => void) {
+        this._listeners.push(cb);
+        cb(this._value);
+    }
+}
+
+export const selectedState = new State<string[]>(loadSelection());
 
 export function toggleSelection(item: string, isPreset: boolean) {
     let current = [...selectedState.value];
 
     if (isPreset) {
-        // Mutual exclusivity for presets
         if (current.includes(item)) {
             selectedState.value = [];
         } else {
             selectedState.value = [item];
         }
     } else {
-        // Clear preset keys when manually selecting individual accounts
         current = current.filter(s => !(s in PRESETS));
 
         if (current.includes(item)) {
@@ -52,13 +71,11 @@ export function toggleSelection(item: string, isPreset: boolean) {
     }
 }
 
-export function launchGame() {
+export function launchGame(windowInstance?: any) {
     const selected = selectedState.value;
-    
-    // Save state to disk
-    Utils.writeFile(selected.join('\n'), CACHE_FILE);
 
-    // Resolve presets into full account list
+    writeFile(selected.join('\n'), CACHE_FILE);
+
     const finalAccounts = new Set<string>();
     selected.forEach(item => {
         if (PRESETS[item]) {
@@ -69,13 +86,19 @@ export function launchGame() {
     });
 
     const launchArgs = Array.from(finalAccounts).join(' ');
-    const hostname = Utils.exec('cat /etc/hostname').trim();
+
+    let hostname = '';
+    try {
+        hostname = readFile('/etc/hostname').trim();
+    } catch (_) {}
 
     if (hostname === "arch-legion") {
-        Utils.execAsync(`ssh tiny-arch "~/Games/launcher/start-trio.sh ${launchArgs}"`);
+        execAsync(`ssh tiny-arch "~/Games/launcher/start-trio.sh ${launchArgs}"`);
     } else if (hostname === "tiny-arch") {
-        Utils.execAsync(`${Utils.HOME}/Games/launcher/start-trio.sh ${launchArgs}`);
+        execAsync(`${homeDir}/Games/launcher/start-trio.sh ${launchArgs}`);
     }
 
-    App.closeWindow("game-launcher");
+    if (windowInstance) {
+        windowInstance.destroy();
+    }
 }
