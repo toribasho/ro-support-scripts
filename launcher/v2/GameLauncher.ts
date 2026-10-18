@@ -2,30 +2,87 @@ import Gtk from "gi://Gtk?version=3.0";
 import Gdk from "gi://Gdk";
 import { PRESETS, ACCOUNTS, selectedState, toggleSelection, launchGame } from "./launcher.js";
 
+// Helper to unpack presets into individual account checks
+const expandPresetsInState = () => {
+    const current = selectedState.value;
+    const expanded = new Set<string>();
+    let hadPreset = false;
+
+    current.forEach(item => {
+        if (PRESETS[item]) {
+            hadPreset = true;
+            PRESETS[item].forEach(acc => expanded.add(acc));
+        } else {
+            expanded.add(item);
+        }
+    });
+
+    if (hadPreset) {
+        selectedState.value = Array.from(expanded);
+    }
+};
+
 const SelectionRow = (label: string, isPreset: boolean) => {
     const btn = new Gtk.Button();
-    const box = new Gtk.Box({ orientation: Gtk.Orientation.HORIZONTAL, spacing: 8 });
+    const box = new Gtk.Box({ orientation: Gtk.Orientation.HORIZONTAL, spacing: 10 });
     
-    const checkLabel = new Gtk.Label({
-        label: selectedState.value.includes(label) ? "[x]" : "[ ]",
-    });
-    
+    const checkIndicator = new Gtk.Box();
+    checkIndicator.get_style_context().add_class('checkbox-box');
+
+    const textContainer = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL, spacing: 2 });
+
     const textLabel = new Gtk.Label({
         label: label,
         xalign: 0,
     });
+    textContainer.pack_start(textLabel, false, false, 0);
 
-    box.pack_start(checkLabel, false, false, 0);
-    box.pack_start(textLabel, true, true, 0);
+    if (isPreset && PRESETS[label]) {
+        const subtextLabel = new Gtk.Label({
+            label: PRESETS[label].join(", "),
+            xalign: 0,
+        });
+        subtextLabel.get_style_context().add_class('preset-subtext');
+        textContainer.pack_start(subtextLabel, false, false, 0);
+    }
+
+    box.pack_start(checkIndicator, false, false, 0);
+    box.pack_start(textContainer, true, true, 0);
     btn.add(box);
 
     btn.get_style_context().add_class('launcher-row');
 
+    const updateCheckState = (selected: string[]) => {
+        const isChecked = selected.includes(label);
+        const checkCtx = checkIndicator.get_style_context();
+        const btnCtx = btn.get_style_context();
+
+        if (isChecked) {
+            checkCtx.add_class('active');
+        } else {
+            checkCtx.remove_class('active');
+        }
+
+        if (!isPreset) {
+            let isIncludedInPreset = false;
+            selected.forEach(sel => {
+                if (PRESETS[sel] && PRESETS[sel].includes(label)) {
+                    isIncludedInPreset = true;
+                }
+            });
+
+            if (isIncludedInPreset) {
+                btnCtx.add_class('preset-highlight');
+            } else {
+                btnCtx.remove_class('preset-highlight');
+            }
+        }
+    };
+
     btn.connect("clicked", () => toggleSelection(label, isPreset));
 
-    selectedState.subscribe(selected => {
-        checkLabel.set_label(selected.includes(label) ? "[x]" : "[ ]");
-    });
+    updateCheckState(selectedState.value);
+    selectedState.subscribe(updateCheckState);
 
     return btn;
 };
@@ -100,16 +157,42 @@ export const GameLauncherWindow = () => {
 
     win.add(mainBox);
 
-    // Add Escape and Return keyboard shortcuts
+    // Double-space timer state
+    let lastSpaceTime = 0;
+
     win.connect("key-press-event", (_, event: Gdk.EventKey) => {
         const keyval = event.get_keyval()[1];
-        if (keyval === Gdk.KEY_Escape) {
-            win.destroy();
+        const state = event.get_state()[1];
+        const now = Date.now();
+
+        // 1. Shift + Enter -> Unpack presets into individual accounts
+        if ((keyval === Gdk.KEY_Return || keyval === Gdk.KEY_KP_Enter) && (state & Gdk.ModifierType.SHIFT_MASK)) {
+            expandPresetsInState();
             return true;
-        } else if (keyval === Gdk.KEY_Return || keyval === Gdk.KEY_KP_Enter) {
+        }
+
+        // 2. Double Space -> Unpack presets into individual accounts
+        if (keyval === Gdk.KEY_space) {
+            if (now - lastSpaceTime < 300) {
+                expandPresetsInState();
+                lastSpaceTime = 0;
+                return true;
+            }
+            lastSpaceTime = now;
+        }
+
+        // 3. Regular Enter -> Confirm & Launch
+        if ((keyval === Gdk.KEY_Return || keyval === Gdk.KEY_KP_Enter) && !(state & Gdk.ModifierType.SHIFT_MASK)) {
             launchGame(win);
             return true;
         }
+
+        // 4. Escape -> Cancel
+        if (keyval === Gdk.KEY_Escape) {
+            win.destroy();
+            return true;
+        }
+
         return false;
     });
 

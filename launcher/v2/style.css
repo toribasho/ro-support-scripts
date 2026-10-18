@@ -1,7 +1,8 @@
+/* Window background */
 .game-launcher-window {
-    background-color: #1e1e2e;
+    background-color: rgba(30, 30, 46, 0.95);
     border-radius: 12px;
-    border: 2px solid #313244;
+    border: 1px solid #45475a;
 }
 
 .window-content {
@@ -12,31 +13,79 @@
     font-weight: bold;
     font-size: 14px;
     color: #cdd6f4;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
 }
 
+/* Base row styling */
 .launcher-row {
     background: transparent;
     border: none;
+    box-shadow: none;
     padding: 6px 10px;
     border-radius: 6px;
+    transition: all 150ms ease;
 }
 
 .launcher-row:hover {
     background-color: #313244;
 }
 
+/* Preset Member Highlight (subtle background + accent left border) */
+.launcher-row.preset-highlight {
+    background-color: rgba(137, 180, 250, 0.12);
+    border-left: 3px solid #94e2d5;
+}
+
+.launcher-row.preset-highlight:hover {
+    background-color: rgba(137, 180, 250, 0.22);
+}
+
+/* Visual Checkbox Box */
+.checkbox-box {
+    min-width: 16px;
+    min-height: 16px;
+    border-radius: 4px;
+    border: 2px solid #585b70;
+    background-color: #1e1e2e;
+    transition: all 150ms ease;
+}
+
+/* Active Checked State */
+.checkbox-box.active {
+    background-color: #94e2d5;
+    border-color: #94e2d5;
+}
+
+/* Action Buttons */
 .btn {
     padding: 6px 16px;
     border-radius: 6px;
+    border: none;
 }
 
 .btn-confirm {
-    background-color: #89b4fa;
+    background-color: #94e2d5;
     color: #11111b;
+    font-weight: bold;
 }
 
 .btn-cancel {
     background-color: #45475a;
     color: #cdd6f4;
+}
+
+/* Muted subtext for preset account lists */
+.preset-subtext {
+    font-size: 11px;
+    color: #a6adc8;
+}
+
+/* Adjust row padding slightly to accommodate two lines of text cleanly */
+.launcher-row {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 8px 10px;
+    border-radius: 6px;
+    transition: all 150ms ease;
 }

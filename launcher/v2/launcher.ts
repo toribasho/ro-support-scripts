@@ -7,12 +7,12 @@ const CACHE_FILE = `${homeDir}/.cache/start-trio-selection`;
 
 export const PRESETS: Record<string, string[]> = {
     "Trio": ["Linker", "Bragi", "Prof"],
-    "All-about-zeny": ["Dancer", "Alcaster", "Kimichuri"],
-    "Shekvitelli": ["Linker", "Dancer", "Prof"],
+    "ProfWithSongs": ["Bragi", "Prof", "Dancer"],
+    "LinkBS": ["Linker", "Minadze"],
 };
 
 export const ACCOUNTS: string[] = [
-    "Linker", "Bragi", "Prof", "Dancer", "Alcaster", "Kimichuri"
+    "Linker", "Bragi", "Prof", "Dancer", "Alcaster", "All-about-zeny", "Kimichuri", "Shekvitelli", "Minadze"
 ];
 
 function loadSelection(): string[] {
