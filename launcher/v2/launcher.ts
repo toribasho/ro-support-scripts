@@ -74,30 +74,54 @@ export function toggleSelection(item: string, isPreset: boolean) {
 export function launchGame(windowInstance?: any) {
     const selected = selectedState.value;
 
+    console.log("================ DEBUG INFO ================");
+    console.log("[1] Raw selected state:", selected);
+
     writeFile(CACHE_FILE, selected.join('\n') );
 
     const finalAccounts = new Set<string>();
     selected.forEach(item => {
         if (PRESETS[item]) {
+            console.log(`[2] Unpacking preset '${item}':`, PRESETS[item]);
             PRESETS[item].forEach(acc => finalAccounts.add(acc));
         } else {
+            console.log(`[2] Adding individual account:`, item);
             finalAccounts.add(item);
         }
     });
 
     const launchArgs = Array.from(finalAccounts).join(' ');
+    console.log("[3] Final launchArgs string:", `"${launchArgs}"`);
 
     let hostname = '';
     try {
         hostname = readFile('/etc/hostname').trim();
-    } catch (_) {}
-
-    if (hostname === "arch-legion") {
-        execAsync(`echo  ${launchArgs}`)
-        execAsync(`ssh tiny-arch "~/Games/launcher/start-trio.sh ${launchArgs}"`);
-    } else if (hostname === "tiny-arch") {
-        execAsync(`${homeDir}/Games/launcher/start-trio.sh ${launchArgs}`);
+    } catch (e) {
+        console.error("[4] Error reading /etc/hostname:", e);
     }
+    console.log("[4] Detected hostname:", `"${hostname}"`);
+
+    let targetCommand = "";
+    if (hostname === "arch-legion") {
+        targetCommand = `ssh tiny-arch "~/Games/launcher/start-trio.sh ${launchArgs}"`;
+    } else if (hostname === "tiny-arch") {
+        targetCommand = `${homeDir}/Games/launcher/start-trio.sh ${launchArgs}`;
+    } else {
+        console.warn("[5] WARNING: Hostname matched neither 'arch-legion' nor 'tiny-arch'!");
+    }
+
+    console.log("[5] Executing command:", targetCommand);
+    console.log("============================================");
+    
+    if (targetCommand) {
+        execAsync(targetCommand);
+    }
+
+    // if (hostname === "arch-legion") {
+    //     execAsync(`ssh tiny-arch "~/Games/launcher/start-trio.sh ${launchArgs}"`);
+    // } else if (hostname === "tiny-arch") {
+    //     execAsync(`${homeDir}/Games/launcher/start-trio.sh ${launchArgs}`);
+    // }
 
     if (windowInstance) {
         windowInstance.destroy();
