@@ -184,6 +184,9 @@ launch_client() {
   elif [[ $ROLE_NAME == "Minadze" ]]; then
     # Shekvitelli - second linker
     $(convertToYdotool "mina")  
+  elif [[ $ROLE_NAME == "Ushguli" ]]; then
+    # Ushguli - second bragi
+    $(convertToYdotool "ushg")      
   else
     echo "Unknown param! "$NUM
   fi
@@ -237,6 +240,8 @@ if [[ " $@ " =~ " LinkBS " ]]; then
   echo "All services selected."
   launch_client 1 "Shekvitelli"
   sleep 1
+  launch_client 2 "Ushguli"
+  sleep 1
   launch_client 4 "Minadze"
   exit 0
 fi
@@ -250,6 +255,9 @@ for arg in "$@"; do
         "Bragi")
             launch_client 2 $arg
             ;;
+        "Ushguli")
+            launch_client 2 $arg
+            ;;            
         "Prof")
             launch_client 3 $arg
             ;;
