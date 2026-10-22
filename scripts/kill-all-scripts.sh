@@ -6,4 +6,4 @@ pkill -9 -e abys-on-timer
 pkill -9 -e main.sh
 pkill -9 -e kim-on.sh
 pkill -9 -e bragi-on-timer
-
+echo 'stopsongs' | socat - UNIX-CONNECT:/tmp/ro_bot.sock
